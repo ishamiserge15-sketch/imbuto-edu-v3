@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}School Login | Imbuto Edu{% endblock %}
+
+{% block content %}
+
+<section class="school-login-page">
+
+    <div class="school-login-glow school-login-glow-one"></div>
+    <div class="school-login-glow school-login-glow-two"></div>
+    <div class="school-login-grid"></div>
+
+    <div class="school-login-container">
+
+        <!-- BRAND -->
+        <div class="school-login-brand">
+            <div class="school-login-mark">
+                IE
+            </div>
+
+            <div class="school-login-brand-text">
+                <strong>IMBUTO EDU</strong>
+                <span>Plant Your Future</span>
+            </div>
+        </div>
+
+
+        <!-- LOGIN CARD -->
+        <div class="school-login-card">
+
+            <div class="school-login-card-glow"></div>
+
+            <div class="school-login-header">
+
+                <span class="school-login-eyebrow">
+                    SCHOOL PORTAL
+                </span>
+
+                <h1>
+                    Welcome <span>back.</span>
+                </h1>
+
+                <p>
+                    Sign in to manage your school's profile,
+                    activities and community updates.
+                </p>
+
+            </div>
+
+
+            {% if error %}
+
+                <div class="school-login-error">
+
+                    <div class="school-login-error-icon">
+                        !
+                    </div>
+
+                    <div>
+                        <strong>Unable to sign in</strong>
+
+                        <p>
+                            {{ error }}
+                        </p>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="school-login-field">
+
+                    <label for="school-email">
+                        SCHOOL EMAIL
+                    </label>
+
+                    <div class="school-login-input-wrap">
+
+                        <span class="school-login-input-icon">
+                            @
+                        </span>
+
+                        <input
+                            id="school-email"
+                            type="email"
+                            name="email"
+                            placeholder="school@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="school-login-field">
+
+                    <label for="school-password">
+                        PASSWORD
+                    </label>
+
+                    <div class="school-login-input-wrap">
+
+                        <span class="school-login-input-icon">
+                            •
+                        </span>
+
+                        <input
+                            id="school-password"
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="school-login-password-toggle"
+                            id="toggleSchoolPassword"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="school-login-submit"
+                >
+                    <span>Sign In to School Portal</span>
+                    <strong>→</strong>
+                </button>
+
+            </form>
+
+
+            <div class="school-login-divider">
+                <span>NEW TO IMBUTO EDU?</span>
+            </div>
+
+
+            <a
+                href="{% url 'register_school' %}"
+                class="school-login-register"
+            >
+                <span>
+                    Register Your School
+                </span>
+
+                <strong>
+                    +
+                </strong>
+            </a>
+
+
+            <a
+                href="{% url 'home' %}"
+                class="school-login-home"
+            >
+                ← Back to Imbuto Edu
+            </a>
+
+        </div>
+
+
+        <div class="school-login-trust">
+
+            <span>SECURE SCHOOL PORTAL</span>
+
+            <i></i>
+
+            <span>IMBUTO EDU</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+const passwordInput =
+    document.getElementById("school-password");
+
+const passwordToggle =
+    document.getElementById("toggleSchoolPassword");
+
+if (passwordInput && passwordToggle) {
+
+    passwordToggle.addEventListener("click", function () {
+
+        const isPassword =
+            passwordInput.type === "password";
+
+        passwordInput.type =
+            isPassword ? "text" : "password";
+
+        this.classList.toggle(
+            "active",
+            isPassword
+        );
+
+    });
+
+}
+
+</script>
+
+{% endblock %}

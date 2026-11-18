@@ -1,0 +1,892 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Imbuto Edu | Plant Your Future{% endblock %}
+
+{% block content %}
+
+<!-- =========================================
+     HERO — PLANT YOUR FUTURE
+========================================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="section-label" style="color:#dbeafe;">
+            IMBUTO EDU
+        </div>
+
+        <h1>
+            Plant Your Future
+        </h1>
+
+        <p>
+            Discover schools, opportunities, sports, competitions,
+            careers and pathways for your future.
+        </p>
+
+        <form
+            class="search-box"
+            method="get"
+            action="{% url 'schools_page' %}"
+        >
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search for a school..."
+                aria-label="Search for a school"
+            >
+
+            <button type="submit">
+                Find Schools
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     LIVE PLATFORM STATISTICS
+========================================= -->
+
+<section class="stats">
+
+    <div class="stat-card">
+        <h2>{{ school_count }}</h2>
+        <p>Schools</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ district_count }}</h2>
+        <p>Districts</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ competition_count }}</h2>
+        <p>Competitions</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{{ sport_count }}</h2>
+        <p>Sports</p>
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FIND YOUR PATH
+========================================= -->
+
+<section class="categories">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            FIND YOUR PATH
+        </span>
+
+        <h2>
+            Explore Your Opportunities
+        </h2>
+
+        <p>
+            Whether you are choosing a school, developing your talents,
+            competing, or planning your career, Imbuto Edu helps you
+            discover the path that fits your future.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <!-- Schools -->
+
+        <div class="category-card">
+
+            <h3>
+                🏫 Explore Schools
+            </h3>
+
+            <p>
+                Discover schools across Rwanda and explore their
+                programs, locations, ownership, facilities and
+                educational opportunities.
+            </p>
+
+            <a href="{% url 'schools_page' %}">
+                Explore Schools →
+            </a>
+
+        </div>
+
+
+        <!-- Top Schools -->
+
+        <div class="category-card">
+
+            <h3>
+                ⭐ Top Schools
+            </h3>
+
+            <p>
+                Explore school rankings and compare schools using
+                the information available on Imbuto Edu.
+            </p>
+
+            <a href="{% url 'top_schools' %}">
+                View Top Schools →
+            </a>
+
+        </div>
+
+
+        <!-- Compare -->
+
+        <div class="category-card">
+
+            <h3>
+                ⚖️ Compare Schools
+            </h3>
+
+            <p>
+                Compare schools side by side to make it easier to
+                understand the differences between your options.
+            </p>
+
+            <a href="{% url 'compare_schools' %}">
+                Compare Schools →
+            </a>
+
+        </div>
+
+
+        <!-- Sports -->
+
+        <div class="category-card">
+
+            <h3>
+                🏆 Sports Excellence
+            </h3>
+
+            <p>
+                Discover sports opportunities and schools where
+                students can develop their athletic talents.
+            </p>
+
+            <a href="{% url 'sports' %}">
+                Explore Sports →
+            </a>
+
+        </div>
+
+
+        <!-- Competitions -->
+
+        <div class="category-card">
+
+            <h3>
+                🥇 Competitions
+            </h3>
+
+            <p>
+                Find academic, technology, science, debate and other
+                competitions that can help students grow their skills.
+            </p>
+
+            <a href="{% url 'competitions' %}">
+                Explore Competitions →
+            </a>
+
+        </div>
+
+
+        <!-- Careers -->
+
+        <div class="category-card">
+
+            <h3>
+                🎓 Careers & TVET
+            </h3>
+
+            <p>
+                Explore career directions, TVET opportunities and
+                pathways that can help you plan your future.
+            </p>
+
+            <a href="{% url 'careers' %}">
+                Explore Careers →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     SPORTS EXCELLENCE
+========================================= -->
+
+<section class="sports-preview">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            SPORTS EXCELLENCE
+        </span>
+
+        <h2>
+            Discover Your Talent
+        </h2>
+
+        <p>
+            Sport is part of education. Explore opportunities where
+            students can develop teamwork, discipline and talent.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <div class="category-card">
+
+            <h3>
+                ⚽ Football
+            </h3>
+
+            <p>
+                Discover schools and opportunities connected to
+                football and student sports.
+            </p>
+
+            <a href="{% url 'sports' %}">
+                Explore Football →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🏀 Basketball
+            </h3>
+
+            <p>
+                Explore basketball opportunities and schools where
+                students can develop their skills.
+            </p>
+
+            <a href="{% url 'sports' %}">
+                Explore Basketball →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🏐 Volleyball
+            </h3>
+
+            <p>
+                Discover volleyball opportunities and school sports
+                activities.
+            </p>
+
+            <a href="{% url 'sports' %}">
+                Explore Volleyball →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🏃 Athletics
+            </h3>
+
+            <p>
+                Explore athletics and other sports pathways available
+                to students.
+            </p>
+
+            <a href="{% url 'sports' %}">
+                Explore Athletics →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     COMPETITIONS & OPPORTUNITIES
+========================================= -->
+
+<section class="competitions">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            COMPETITIONS & OPPORTUNITIES
+        </span>
+
+        <h2>
+            Turn Skills Into Opportunities
+        </h2>
+
+        <p>
+            Competitions give students a chance to learn, create,
+            collaborate and demonstrate what they can do.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <div class="category-card">
+
+            <h3>
+                🗣️ Debate
+            </h3>
+
+            <p>
+                Develop communication, critical thinking and
+                confidence through debate.
+            </p>
+
+            <a href="{% url 'competitions' %}">
+                Discover Opportunities →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                💻 Coding
+            </h3>
+
+            <p>
+                Explore technology and programming competitions
+                where students can build and demonstrate solutions.
+            </p>
+
+            <a href="{% url 'competitions' %}">
+                Discover Opportunities →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🔬 Science
+            </h3>
+
+            <p>
+                Discover science-focused opportunities that encourage
+                experimentation, research and innovation.
+            </p>
+
+            <a href="{% url 'competitions' %}">
+                Discover Opportunities →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🧠 Olympiads
+            </h3>
+
+            <p>
+                Challenge yourself through academic competitions and
+                opportunities for talented students.
+            </p>
+
+            <a href="{% url 'competitions' %}">
+                Discover Opportunities →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CAREERS & TVET
+========================================= -->
+
+<section class="careers">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            CAREERS & TVET
+        </span>
+
+        <h2>
+            Build Your Future
+        </h2>
+
+        <p>
+            Education is a journey toward a future career. Explore
+            different directions and discover opportunities that
+            match your interests and skills.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <div class="category-card">
+
+            <h3>
+                🧭 Career Guidance
+            </h3>
+
+            <p>
+                Explore different career directions and start
+                understanding the pathways behind them.
+            </p>
+
+            <a href="{% url 'careers' %}">
+                Explore Careers →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🛠️ TVET
+            </h3>
+
+            <p>
+                Discover technical and vocational education pathways
+                that develop practical skills for the future.
+            </p>
+
+            <a href="{% url 'careers' %}">
+                Explore TVET →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🎓 Education Pathways
+            </h3>
+
+            <p>
+                Understand different education options and discover
+                possible directions after your current studies.
+            </p>
+
+            <a href="{% url 'careers' %}">
+                Explore Pathways →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                💡 Future Skills
+            </h3>
+
+            <p>
+                Explore skills and areas of learning that can help
+                prepare you for changing opportunities.
+            </p>
+
+            <a href="{% url 'careers' %}">
+                Discover More →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     WHY IMBUTO EDU
+========================================= -->
+
+<section class="why-us">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            WHY IMBUTO EDU
+        </span>
+
+        <h2>
+            One Platform. Many Possibilities.
+        </h2>
+
+        <p>
+            Imbuto Edu is designed to make discovering educational
+            opportunities simpler for students, parents and schools.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <div class="category-card">
+
+            <h3>
+                ✓ Verified Information
+            </h3>
+
+            <p>
+                Build a trusted place where important school and
+                educational information can be organized and presented
+                clearly.
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                ⚖️ Easy Comparison
+            </h3>
+
+            <p>
+                Compare schools and understand your options before
+                making important educational decisions.
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🌱 Student Opportunities
+            </h3>
+
+            <p>
+                Bring schools, sports, competitions, careers and
+                opportunities together in one platform.
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🇷🇼 Built for Rwanda
+            </h3>
+
+            <p>
+                Create an education discovery platform designed around
+                the needs of students, parents and schools in Rwanda.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+<!-- =========================================
+     EVENTS & NEWS
+========================================= -->
+
+<section class="categories">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            EVENTS & NEWS
+        </span>
+
+        <h2>
+            Stay Connected
+        </h2>
+
+        <p>
+            Follow educational activities, school events and
+            opportunities through Imbuto Edu.
+        </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <div class="category-card">
+
+            <h3>
+                📰 Events & News
+            </h3>
+
+            <p>
+                Discover updates, school activities and educational
+                news from the Imbuto Edu platform.
+            </p>
+
+            <a href="{% url 'events_news' %}">
+                View Events & News →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                🏫 School Activities
+            </h3>
+
+            <p>
+                Eventually, schools will be able to share activities,
+                announcements and important updates through their
+                school profiles.
+            </p>
+
+            <a href="{% url 'events_news' %}">
+                Explore Updates →
+            </a>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <h3>
+                📢 Opportunities
+            </h3>
+
+            <p>
+                Keep an eye on new educational opportunities,
+                competitions and activities.
+            </p>
+
+            <a href="{% url 'events_news' %}">
+                Discover More →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     EXPLORE RWANDA'S SCHOOLS
+========================================= -->
+
+<section class="featured-schools">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            DISCOVER GREAT SCHOOLS
+        </span>
+
+        <h2>
+            Explore Rwanda's Schools
+        </h2>
+
+        <p>
+            Discover schools across Rwanda and explore their
+            information, location, ownership and profile.
+        </p>
+
+    </div>
+
+
+    {% if schools %}
+
+        <div class="school-grid">
+
+            {% for school in schools %}
+
+                <article class="school-card">
+
+                    {% if school.image %}
+
+                        <img
+                            src="{{ school.image.url }}"
+                            alt="{{ school.name }}"
+                            class="school-card-image"
+                        >
+
+                    {% endif %}
+
+
+                    <div class="school-card-top">
+
+                        {% if school.ownership %}
+
+                            <span class="school-badge">
+                                {{ school.ownership }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="school-badge">
+                                School
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="school-card-content">
+
+                        <h3>
+                            {{ school.name }}
+                        </h3>
+
+
+                        {% if school.district %}
+
+                            <div class="school-location">
+                                📍 {{ school.district }}
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if school.description %}
+
+                            <p class="school-description">
+                                {{ school.description|truncatewords:25 }}
+                            </p>
+
+                        {% else %}
+
+                            <p class="school-description">
+                                Explore this school's profile and
+                                discover more information about its
+                                educational opportunities.
+                            </p>
+
+                        {% endif %}
+
+
+                        <div class="school-card-footer">
+
+                            <span>
+                                {% if school.school_type %}
+                                    {{ school.school_type }}
+                                {% else %}
+                                    Education
+                                {% endif %}
+                            </span>
+
+                            <a
+                                href="{% url 'school_detail' school.id %}"
+                            >
+                                View Profile →
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-schools">
+
+            <h3>
+                No schools available yet.
+            </h3>
+
+            <p>
+                School profiles will appear here as they are added
+                to Imbuto Edu.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+<div class="home-section-action">
+    <a href="{% url 'schools_page' %}" class="home-primary-btn">
+        Explore All Schools
+        <span>→</span>
+    </a>
+</div>
+
+</section>
+
+
+<!-- =========================================
+     FINAL CALL TO ACTION
+========================================= -->
+
+<section class="cta">
+
+    <div class="cta-content">
+
+        <h2>
+            Your Future Starts Here
+        </h2>
+
+        <p>
+            Explore schools, discover opportunities and start
+            planting your future with Imbuto Edu.
+        </p>
+
+        <a
+            href="{% url 'schools_page' %}"
+            class="cta-button"
+        >
+            Explore Schools
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

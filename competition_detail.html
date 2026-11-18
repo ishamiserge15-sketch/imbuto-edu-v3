@@ -1,0 +1,1070 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{ competition.name }} | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     COMPETITION HERO
+========================================================= -->
+
+<section class="competition-detail-hero">
+
+    <div class="competition-detail-hero-glow"></div>
+
+    <div class="competition-detail-hero-content">
+
+        <div class="competition-detail-hero-copy">
+
+            <div class="competition-detail-breadcrumb">
+
+                <a href="{% url 'competitions' %}">
+                    Competitions
+                </a>
+
+                <span>→</span>
+
+                <span>
+                    {{ competition.name }}
+                </span>
+
+            </div>
+
+
+            <div class="competition-detail-labels">
+
+                {% if competition.category %}
+
+                    <span class="competition-detail-category">
+                        {{ competition.category }}
+                    </span>
+
+                {% endif %}
+
+
+                {% if competition.featured %}
+
+                    <span class="competition-detail-featured">
+                        ⭐ Featured Opportunity
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <h1>
+                {{ competition.name }}
+            </h1>
+
+
+            {% if competition.description %}
+
+                <p class="competition-detail-hero-description">
+                    {{ competition.description }}
+                </p>
+
+            {% endif %}
+
+
+            <div class="competition-detail-hero-actions">
+
+                {% if competition.registration_link %}
+
+                    <a
+                        href="{{ competition.registration_link }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="competition-primary-btn"
+                    >
+                        Register / Apply
+                        <span>↗</span>
+                    </a>
+
+                {% endif %}
+
+
+                {% if competition.website %}
+
+                    <a
+                        href="{{ competition.website }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="competition-secondary-btn"
+                    >
+                        Official Website
+                        <span>↗</span>
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO IMAGE -->
+
+        <div class="competition-detail-hero-image">
+
+            {% if competition.image %}
+
+                <img
+                    src="{{ competition.image.url }}"
+                    alt="{{ competition.name }}"
+                >
+
+            {% else %}
+
+                <div class="competition-detail-image-fallback">
+
+                    <div class="competition-detail-fallback-icon">
+                        🏆
+                    </div>
+
+                    <strong>
+                        Student Excellence
+                    </strong>
+
+                    <span>
+                        Discover • Compete • Achieve
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<section class="competition-detail-main">
+
+    <div class="competition-detail-layout">
+
+
+        <!-- =====================================================
+             MAIN COLUMN
+        ====================================================== -->
+
+        <main class="competition-detail-content">
+
+
+            <!-- =================================================
+                 OVERVIEW
+            ================================================== -->
+
+            <section class="competition-info-section">
+
+                <span class="section-label">
+                    OVERVIEW
+                </span>
+
+                <h2>
+                    About this competition
+                </h2>
+
+
+                {% if competition.description %}
+
+                    <p class="competition-detail-description">
+                        {{ competition.description }}
+                    </p>
+
+                {% else %}
+
+                    <p class="competition-detail-muted">
+                        Information about this competition will be
+                        published as it becomes available.
+                    </p>
+
+                {% endif %}
+
+            </section>
+
+
+
+            <!-- =================================================
+                 KEY INFORMATION
+            ================================================== -->
+
+            <section class="competition-info-section">
+
+                <span class="section-label">
+                    KEY INFORMATION
+                </span>
+
+                <h2>
+                    Competition Details
+                </h2>
+
+
+                <div class="competition-detail-info-grid">
+
+
+                    {% if competition.organizer %}
+
+                        <div class="competition-detail-info-card">
+
+                            <span>
+                                ORGANIZER
+                            </span>
+
+                            <strong>
+                                {{ competition.organizer }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if competition.organizing_institution %}
+
+                        <div class="competition-detail-info-card">
+
+                            <span>
+                                ORGANIZING INSTITUTION
+                            </span>
+
+                            <strong>
+                                {{ competition.organizing_institution }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if competition.target_level %}
+
+                        <div class="competition-detail-info-card">
+
+                            <span>
+                                TARGET LEVEL
+                            </span>
+
+                            <strong>
+                                {{ competition.target_level }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if competition.subjects_skills %}
+
+                        <div class="competition-detail-info-card">
+
+                            <span>
+                                SUBJECTS / SKILLS
+                            </span>
+
+                            <strong>
+                                {{ competition.subjects_skills }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if competition.competition_date %}
+
+                        <div class="competition-detail-info-card">
+
+                            <span>
+                                COMPETITION DATE
+                            </span>
+
+                            <strong>
+                                {{ competition.competition_date }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if competition.location %}
+
+                        <div class="competition-detail-info-card">
+
+                            <span>
+                                LOCATION
+                            </span>
+
+                            <strong>
+                                📍 {{ competition.location }}
+                            </strong>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="competition-detail-info-card">
+
+                        <span>
+                            PARTICIPATING SCHOOLS
+                        </span>
+
+                        <strong>
+                            {{ participating_schools|length }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ELIGIBILITY
+            ================================================== -->
+
+            {% if competition.eligibility %}
+
+                <section class="competition-info-section">
+
+                    <span class="section-label">
+                        ELIGIBILITY
+                    </span>
+
+                    <h2>
+                        Who can participate?
+                    </h2>
+
+
+                    <div class="competition-detail-text-box">
+
+                        {{ competition.eligibility|linebreaks }}
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 REGISTRATION
+            ================================================== -->
+
+            {% if competition.registration_info or competition.registration_deadline or competition.registration_link %}
+
+                <section class="competition-info-section">
+
+                    <span class="section-label">
+                        REGISTRATION
+                    </span>
+
+                    <h2>
+                        How to participate
+                    </h2>
+
+
+                    {% if competition.registration_info %}
+
+                        <div class="competition-detail-text-box">
+
+                            {{ competition.registration_info|linebreaks }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="competition-registration-grid">
+
+
+                        {% if competition.registration_deadline %}
+
+                            <div class="competition-registration-card">
+
+                                <span>
+                                    REGISTRATION DEADLINE
+                                </span>
+
+                                <strong>
+                                    {{ competition.registration_deadline }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if competition.registration_link %}
+
+                            <div class="competition-registration-card competition-registration-action">
+
+                                <span>
+                                    READY TO PARTICIPATE?
+                                </span>
+
+                                <a
+                                    href="{{ competition.registration_link }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Open Registration
+                                    <span>↗</span>
+                                </a>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 RULES
+            ================================================== -->
+
+            {% if competition.rules %}
+
+                <section class="competition-info-section">
+
+                    <span class="section-label">
+                        RULES
+                    </span>
+
+                    <h2>
+                        Competition Rules
+                    </h2>
+
+
+                    <div class="competition-detail-text-box">
+
+                        {{ competition.rules|linebreaks }}
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 PRIZES
+            ================================================== -->
+
+            {% if competition.prizes %}
+
+                <section class="competition-info-section">
+
+                    <span class="section-label">
+                        RECOGNITION
+                    </span>
+
+                    <h2>
+                        Prizes & Recognition
+                    </h2>
+
+
+                    <div class="competition-prizes-box">
+
+                        <div class="competition-prizes-icon">
+                            🏆
+                        </div>
+
+                        <div>
+
+                            {{ competition.prizes|linebreaks }}
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 PARTICIPATING SCHOOLS
+            ================================================== -->
+
+            <section class="competition-info-section">
+
+                <span class="section-label">
+                    SCHOOL ACHIEVEMENTS
+                </span>
+
+                <h2>
+                    Participating Schools
+                </h2>
+
+
+                {% if participating_schools %}
+
+                    <div class="competition-results-list">
+
+                        {% for item in participating_schools %}
+
+                            <article class="competition-result-card">
+
+
+                                <!-- SCHOOL -->
+
+                                <div class="competition-result-school">
+
+                                    {% if item.school.image %}
+
+                                        <img
+                                            src="{{ item.school.image.url }}"
+                                            alt="{{ item.school.name }}"
+                                        >
+
+                                    {% else %}
+
+                                        <div class="competition-result-school-fallback">
+
+                                            {{ item.school.name|first|upper }}
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    <div>
+
+                                        <span>
+                                            PARTICIPATING SCHOOL
+                                        </span>
+
+                                        <h3>
+                                            {{ item.school.name }}
+                                        </h3>
+
+
+                                        {% if item.school.district %}
+
+                                            <p>
+
+                                                📍 {{ item.school.district }}
+
+                                                {% if item.school.province %}
+                                                    , {{ item.school.province }}
+                                                {% endif %}
+
+                                            </p>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <!-- PERFORMANCE -->
+
+                                <div class="competition-result-performance">
+
+
+                                    {% if item.year %}
+
+                                        <div>
+
+                                            <span>
+                                                YEAR
+                                            </span>
+
+                                            <strong>
+                                                {{ item.year }}
+                                            </strong>
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    {% if item.position %}
+
+                                        <div>
+
+                                            <span>
+                                                POSITION
+                                            </span>
+
+                                            <strong>
+                                                #{{ item.position }}
+                                            </strong>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+
+
+
+                                <!-- ACHIEVEMENT -->
+
+                                {% if item.achievement %}
+
+                                    <div class="competition-result-achievement">
+
+                                        <span>
+                                            ★
+                                        </span>
+
+                                        <div>
+
+                                            <strong>
+                                                Achievement
+                                            </strong>
+
+                                            <p>
+                                                {{ item.achievement }}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                {% endif %}
+
+
+
+                                <!-- SCHOOL PROFILE -->
+
+                                <a
+                                    href="{% url 'school_detail' item.school.id %}"
+                                    class="competition-profile-link"
+                                >
+                                    View School Profile
+                                    <span>→</span>
+                                </a>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="competition-detail-empty">
+
+                        <div class="competition-empty-icon">
+                            🏆
+                        </div>
+
+                        <h3>
+                            Participation records coming soon
+                        </h3>
+
+                        <p>
+                            Official school participation and
+                            achievement records will appear here
+                            once they are published on Imbuto Edu.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+
+            <!-- =================================================
+                 GALLERY
+            ================================================== -->
+
+            {% if gallery %}
+
+                <section class="competition-info-section">
+
+                    <span class="section-label">
+                        GALLERY
+                    </span>
+
+                    <h2>
+                        Competition Gallery
+                    </h2>
+
+
+                    <div class="competition-gallery">
+
+                        {% for image in gallery %}
+
+                            <figure>
+
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ image.caption|default:competition.name }}"
+                                    loading="lazy"
+                                >
+
+
+                                {% if image.caption %}
+
+                                    <figcaption>
+                                        {{ image.caption }}
+                                    </figcaption>
+
+                                {% endif %}
+
+                            </figure>
+
+                        {% endfor %}
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 DOCUMENTS
+            ================================================== -->
+
+            {% if documents %}
+
+                <section class="competition-info-section">
+
+                    <span class="section-label">
+                        RESOURCES
+                    </span>
+
+                    <h2>
+                        Official Documents
+                    </h2>
+
+
+                    <div class="competition-documents">
+
+                        {% for document in documents %}
+
+                            <a
+                                href="{{ document.document.url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="competition-document-card"
+                            >
+
+                                <div class="competition-document-icon">
+                                    📄
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        {{ document.title }}
+                                    </strong>
+
+
+                                    {% if document.description %}
+
+                                        <p>
+                                            {{ document.description|truncatewords:20 }}
+                                        </p>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <span>
+                                    ↗
+                                </span>
+
+                            </a>
+
+                        {% endfor %}
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+        </main>
+
+
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+
+        <aside class="competition-detail-sidebar">
+
+
+            <!-- QUICK FACTS -->
+
+            <div class="competition-sidebar-card">
+
+                <span class="section-label">
+                    QUICK FACTS
+                </span>
+
+
+                <div class="competition-sidebar-stat">
+
+                    <strong>
+                        {{ participating_schools|length }}
+                    </strong>
+
+                    <span>
+                        Participating Schools
+                    </span>
+
+                </div>
+
+
+                {% if competition.category %}
+
+                    <div class="competition-sidebar-row">
+
+                        <span>
+                            Category
+                        </span>
+
+                        <strong>
+                            {{ competition.category }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if competition.target_level %}
+
+                    <div class="competition-sidebar-row">
+
+                        <span>
+                            Level
+                        </span>
+
+                        <strong>
+                            {{ competition.target_level }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if competition.location %}
+
+                    <div class="competition-sidebar-row">
+
+                        <span>
+                            Location
+                        </span>
+
+                        <strong>
+                            {{ competition.location }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+
+            <!-- DEADLINE -->
+
+            {% if competition.registration_deadline %}
+
+                <div class="competition-sidebar-card competition-deadline-card">
+
+                    <span class="section-label">
+                        APPLICATION DEADLINE
+                    </span>
+
+                    <strong>
+                        {{ competition.registration_deadline }}
+                    </strong>
+
+                    {% if competition.registration_link %}
+
+                        <a
+                            href="{{ competition.registration_link }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="competition-sidebar-button"
+                        >
+                            Apply Now →
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- OFFICIAL SOURCE -->
+
+            {% if competition.official_source %}
+
+                <div class="competition-sidebar-card">
+
+                    <span class="section-label">
+                        OFFICIAL SOURCE
+                    </span>
+
+                    <p>
+                        {{ competition.official_source }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- CONTACT -->
+
+            {% if competition.contact_email or competition.contact_phone %}
+
+                <div class="competition-sidebar-card">
+
+                    <span class="section-label">
+                        CONTACT
+                    </span>
+
+
+                    {% if competition.contact_email %}
+
+                        <a
+                            href="mailto:{{ competition.contact_email }}"
+                            class="competition-contact-link"
+                        >
+                            ✉ {{ competition.contact_email }}
+                        </a>
+
+                    {% endif %}
+
+
+                    {% if competition.contact_phone %}
+
+                        <a
+                            href="tel:{{ competition.contact_phone }}"
+                            class="competition-contact-link"
+                        >
+                            ☎ {{ competition.contact_phone }}
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- WEBSITE -->
+
+            {% if competition.website %}
+
+                <div class="competition-sidebar-card">
+
+                    <span class="section-label">
+                        OFFICIAL WEBSITE
+                    </span>
+
+                    <a
+                        href="{{ competition.website }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="competition-sidebar-button"
+                    >
+                        Visit Official Website
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- BACK -->
+
+            <a
+                href="{% url 'competitions' %}"
+                class="competition-back-button"
+            >
+                ← Back to Competitions
+            </a>
+
+        </aside>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+
+<section class="competition-final-cta">
+
+    <div>
+
+        <span class="section-label">
+            KEEP EXPLORING
+        </span>
+
+        <h2>
+            Discover your next opportunity.
+        </h2>
+
+        <p>
+            Explore competitions, schools and educational
+            opportunities across Rwanda.
+        </p>
+
+        <a
+            href="{% url 'competitions' %}"
+            class="competition-primary-btn"
+        >
+            Explore Competitions
+            <span>→</span>
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

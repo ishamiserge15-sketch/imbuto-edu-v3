@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}Create Post | Imbuto Edu{% endblock %}
+
+{% block content %}
+
+<section class="activity-create-page">
+
+    <div class="activity-create-glow"></div>
+
+    <div class="activity-create-container">
+
+        <!-- HEADER -->
+        <div class="activity-create-header">
+
+            <span class="activity-eyebrow">
+                School Newsroom
+            </span>
+
+            <h1>
+                Share Your School's Story
+            </h1>
+
+            <p>
+                Publish an event, achievement, announcement, or important
+                school update for the Imbuto Edu community.
+            </p>
+
+        </div>
+
+
+        <!-- MAIN PUBLISHER -->
+        <div class="activity-create-layout">
+
+            <!-- FORM CARD -->
+            <div class="activity-form-card">
+
+                <div class="activity-form-top">
+
+                    <div>
+                        <span class="activity-form-label">
+                            Create New Post
+                        </span>
+
+                        <h2>
+                            Tell the community what is happening.
+                        </h2>
+                    </div>
+
+                    <div class="activity-form-icon">
+                        ✦
+                    </div>
+
+                </div>
+
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="activity-form-errors">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+
+                    <!-- FORM FIELDS -->
+                    <div class="activity-form-fields">
+
+                        {% for field in form %}
+
+                            <div class="activity-field">
+
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.help_text %}
+                                    <small class="activity-help">
+                                        {{ field.help_text }}
+                                    </small>
+                                {% endif %}
+
+                                {% for error in field.errors %}
+                                    <span class="activity-error">
+                                        {{ error }}
+                                    </span>
+                                {% endfor %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- SUBMISSION NOTICE -->
+                    <div class="activity-review-notice">
+
+                        <div class="activity-review-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>
+                                Review before publication
+                            </strong>
+
+                            <p>
+                                Your post will be submitted for review.
+                                It will only appear publicly after approval.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+                    <div class="activity-form-actions">
+
+                        <a
+                            href="{% url 'school_dashboard' %}"
+                            class="activity-cancel-button"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="activity-submit-button"
+                        >
+                            Submit for Review
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <!-- SIDE INFORMATION -->
+            <aside class="activity-info-panel">
+
+                <div class="activity-info-orb"></div>
+
+                <span class="activity-info-label">
+                    SCHOOL PUBLISHER
+                </span>
+
+                <h2>
+                    Make your school's achievements visible.
+                </h2>
+
+                <p>
+                    Use this space to keep students, parents and the wider
+                    education community informed about what your school is
+                    doing.
+                </p>
+
+
+                <div class="activity-tips">
+
+                    <div class="activity-tip">
+                        <span>01</span>
+
+                        <div>
+                            <strong>
+                                Write clearly
+                            </strong>
+
+                            <p>
+                                Give your post a useful and informative title.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="activity-tip">
+                        <span>02</span>
+
+                        <div>
+                            <strong>
+                                Add details
+                            </strong>
+
+                            <p>
+                                Explain what happened and why it matters.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="activity-tip">
+                        <span>03</span>
+
+                        <div>
+                            <strong>
+                                Choose a good image
+                            </strong>
+
+                            <p>
+                                Use a clear image that represents the story.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="activity-tip">
+                        <span>04</span>
+
+                        <div>
+                            <strong>
+                                Submit for review
+                            </strong>
+
+                            <p>
+                                Your school post will be reviewed before
+                                becoming public.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

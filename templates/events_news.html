@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}
+Events & News | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<section class="events-news-header">
+
+    <div class="events-news-header-glow"></div>
+
+    <p class="eyebrow">Rwanda Education Hub</p>
+
+    <h1>Events & News</h1>
+
+    <p>
+        Discover the latest events, achievements,
+        announcements and activities from schools
+        across Rwanda.
+    </p>
+
+</section>
+
+
+{% if events %}
+
+<!-- ==========================================
+     FEATURED STORY
+========================================== -->
+
+<section class="events-featured-section">
+
+    <div class="events-featured-label">
+        <span></span>
+        Featured Story
+    </div>
+
+    {% with event=events|first %}
+
+    <article class="featured-event-card">
+
+        {% if event.image %}
+            <div class="featured-event-image-wrapper">
+
+                <img
+                    src="{{ event.image.url }}"
+                    alt="{{ event.title }}"
+                    class="featured-event-image"
+                >
+
+                <div class="featured-event-image-overlay"></div>
+
+            </div>
+        {% endif %}
+
+
+        <div class="featured-event-content">
+
+            <div class="featured-event-meta">
+
+                <span class="featured-school">
+                    {{ event.school.name }}
+                </span>
+
+                <span class="featured-date">
+
+                    {% if event.activity_date %}
+                        {{ event.activity_date|date:"M d, Y" }}
+                    {% else %}
+                        {{ event.created_at|date:"M d, Y" }}
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+
+            <div class="featured-event-badge">
+                Latest Update
+            </div>
+
+
+            <h2>
+                {{ event.title }}
+            </h2>
+
+
+            <p>
+                {{ event.description|truncatewords:45 }}
+            </p>
+
+
+            <a href="#" class="featured-read-more">
+                Read Full Story
+                <span>→</span>
+            </a>
+
+        </div>
+
+    </article>
+
+    {% endwith %}
+
+</section>
+
+
+<!-- ==========================================
+     LATEST NEWS
+========================================== -->
+
+<section class="events-news-section">
+
+    <div class="events-section-heading">
+
+        <div>
+            <p class="section-label">Stay Updated</p>
+
+            <h2>
+                Latest from Rwanda's Schools
+            </h2>
+        </div>
+
+        <p>
+            School achievements, activities,
+            announcements and important updates.
+        </p>
+
+    </div>
+
+
+    <div class="events-news-grid">
+
+        {% for event in events %}
+
+            <article class="news-card">
+
+                {% if event.image %}
+
+                    <div class="news-card-image-wrapper">
+
+                        <img
+                            src="{{ event.image.url }}"
+                            alt="{{ event.title }}"
+                            class="news-card-image"
+                        >
+
+                        <span class="news-card-category">
+                            School Update
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="news-card-content">
+
+                    <div class="news-card-meta">
+
+                        <span class="news-school">
+                            {{ event.school.name }}
+                        </span>
+
+                        <span class="news-date">
+
+                            {% if event.activity_date %}
+                                {{ event.activity_date|date:"M d, Y" }}
+                            {% else %}
+                                {{ event.created_at|date:"M d, Y" }}
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <h2>
+                        {{ event.title }}
+                    </h2>
+
+
+                    <p>
+                        {{ event.description|truncatewords:30 }}
+                    </p>
+
+
+                    <a href="#" class="news-read-more">
+                        Read More
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </article>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     EVENT TIMELINE
+========================================== -->
+
+<section class="events-timeline-section">
+
+    <div class="events-timeline-heading">
+
+        <p class="section-label">
+            School Activity Flow
+        </p>
+
+        <h2>
+            Events Timeline
+        </h2>
+
+        <p>
+            Follow important activities and moments
+            happening across Rwanda's schools.
+        </p>
+
+    </div>
+
+
+    <div class="events-timeline">
+
+        {% for event in events %}
+
+            <article class="timeline-item">
+
+                <div class="timeline-marker">
+
+                    <span></span>
+
+                </div>
+
+
+                <div class="timeline-card">
+
+                    <div class="timeline-date">
+
+                        {% if event.activity_date %}
+                            {{ event.activity_date|date:"M d, Y" }}
+                        {% else %}
+                            {{ event.created_at|date:"M d, Y" }}
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="timeline-school">
+                        {{ event.school.name }}
+                    </div>
+
+
+                    <h3>
+                        {{ event.title }}
+                    </h3>
+
+
+                    <p>
+                        {{ event.description|truncatewords:24 }}
+                    </p>
+
+
+                    <a href="#">
+                        View Event →
+                    </a>
+
+                </div>
+
+            </article>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% else %}
+
+
+<!-- ==========================================
+     EMPTY STATE
+========================================== -->
+
+<section class="events-news-section">
+
+    <div class="events-news-empty">
+
+        <div class="empty-state-icon">
+            ✦
+        </div>
+
+        <h2>
+            Events & News coming soon
+        </h2>
+
+        <p>
+            Important announcements, events,
+            achievements and activities from
+            Rwanda's schools will appear here.
+        </p>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+{% endblock %}

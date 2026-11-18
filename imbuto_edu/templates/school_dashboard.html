@@ -1,0 +1,458 @@
+{% extends 'base.html' %}
+
+{% block title %}
+School Dashboard | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<section class="school-dashboard-page">
+
+    <div class="school-dashboard-glow school-dashboard-glow-one"></div>
+    <div class="school-dashboard-glow school-dashboard-glow-two"></div>
+
+    <div class="school-dashboard-container">
+
+
+        <!-- =========================================
+             DASHBOARD HEADER
+        ========================================== -->
+
+        <div class="school-dashboard-header">
+
+            <div class="school-dashboard-welcome">
+
+                <span class="school-dashboard-eyebrow">
+                    SCHOOL CONTROL CENTER
+                </span>
+
+                <h1>
+                    Welcome,
+                    <span>{{ school.name }}</span>
+                </h1>
+
+                <p>
+                    Manage your school's presence, publish updates,
+                    and keep your education community informed.
+                </p>
+
+            </div>
+
+
+            <div class="school-dashboard-account">
+
+                <div class="school-dashboard-avatar">
+                    {{ school.name|first|upper }}
+                </div>
+
+                <div>
+                    <strong>
+                        {{ school.name }}
+                    </strong>
+
+                    <span>
+                        Verified School Account
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             STATUS BAR
+        ========================================== -->
+
+        <div class="school-dashboard-status">
+
+            <div class="dashboard-status-item">
+
+                <span class="dashboard-status-dot"></span>
+
+                <div>
+                    <strong>
+                        School Portal Active
+                    </strong>
+
+                    <p>
+                        Your account is ready to manage school content.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-status-divider"></div>
+
+
+            <div class="dashboard-status-item">
+
+                <span class="dashboard-status-icon">
+                    IE
+                </span>
+
+                <div>
+                    <strong>
+                        Imbuto Edu Network
+                    </strong>
+
+                    <p>
+                        Connected to the public education platform.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             QUICK ACTIONS
+        ========================================== -->
+
+        <div class="school-dashboard-section-heading">
+
+            <div>
+                <span class="dashboard-section-label">
+                    QUICK ACTIONS
+                </span>
+
+                <h2>
+                    What would you like to do?
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="school-dashboard-actions">
+
+
+            <!-- CREATE POST -->
+
+            <a
+                href="{% url 'create_school_activity' %}"
+                class="dashboard-action dashboard-action-primary"
+            >
+
+                <div class="dashboard-action-icon">
+                    +
+                </div>
+
+                <div class="dashboard-action-content">
+
+                    <span>
+                        PUBLISH CONTENT
+                    </span>
+
+                    <h3>
+                        Create a School Post
+                    </h3>
+
+                    <p>
+                        Share an achievement, announcement,
+                        event or school activity.
+                    </p>
+
+                </div>
+
+                <strong class="dashboard-action-arrow">
+                    →
+                </strong>
+
+            </a>
+
+
+            <!-- PROFILE -->
+
+            <a
+                href="#"
+                class="dashboard-action"
+            >
+
+                <div class="dashboard-action-icon">
+                    🏫
+                </div>
+
+                <div class="dashboard-action-content">
+
+                    <span>
+                        SCHOOL PROFILE
+                    </span>
+
+                    <h3>
+                        Manage Profile
+                    </h3>
+
+                    <p>
+                        Update your school's public information.
+                    </p>
+
+                </div>
+
+                <strong class="dashboard-action-arrow">
+                    →
+                </strong>
+
+            </a>
+
+
+        </div>
+
+
+        <!-- =========================================
+             DASHBOARD MODULES
+        ========================================== -->
+
+        <div class="school-dashboard-section-heading dashboard-modules-heading">
+
+            <div>
+                <span class="dashboard-section-label">
+                    SCHOOL MANAGEMENT
+                </span>
+
+                <h2>
+                    Your school tools
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-module-grid">
+
+
+            <a
+                href="{% url 'create_school_activity' %}"
+                class="dashboard-module-card"
+            >
+
+                <div class="dashboard-module-number">
+                    01
+                </div>
+
+                <div class="dashboard-module-icon">
+                    📰
+                </div>
+
+                <h3>
+                    Activities
+                </h3>
+
+                <p>
+                    Publish school activities,
+                    achievements and announcements.
+                </p>
+
+                <span class="dashboard-module-link">
+                    Open Publisher →
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="dashboard-module-card"
+            >
+
+                <div class="dashboard-module-number">
+                    02
+                </div>
+
+                <div class="dashboard-module-icon">
+                    📸
+                </div>
+
+                <h3>
+                    Gallery
+                </h3>
+
+                <p>
+                    Manage photos that represent
+                    your school's community.
+                </p>
+
+                <span class="dashboard-module-link">
+                    Coming Soon
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="dashboard-module-card"
+            >
+
+                <div class="dashboard-module-number">
+                    03
+                </div>
+
+                <div class="dashboard-module-icon">
+                    📅
+                </div>
+
+                <h3>
+                    Events
+                </h3>
+
+                <p>
+                    Share upcoming school events
+                    with students and parents.
+                </p>
+
+                <span class="dashboard-module-link">
+                    Coming Soon
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="dashboard-module-card"
+            >
+
+                <div class="dashboard-module-number">
+                    04
+                </div>
+
+                <div class="dashboard-module-icon">
+                    🎓
+                </div>
+
+                <h3>
+                    Applications
+                </h3>
+
+                <p>
+                    Manage official information
+                    about school applications.
+                </p>
+
+                <span class="dashboard-module-link">
+                    Coming Soon
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="dashboard-module-card"
+            >
+
+                <div class="dashboard-module-number">
+                    05
+                </div>
+
+                <div class="dashboard-module-icon">
+                    📢
+                </div>
+
+                <h3>
+                    Opportunities
+                </h3>
+
+                <p>
+                    Share approved opportunities
+                    with your students.
+                </p>
+
+                <span class="dashboard-module-link">
+                    Coming Soon
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="dashboard-module-card"
+            >
+
+                <div class="dashboard-module-number">
+                    06
+                </div>
+
+                <div class="dashboard-module-icon">
+                    ⚙
+                </div>
+
+                <h3>
+                    School Settings
+                </h3>
+
+                <p>
+                    Manage your school's account
+                    and publishing preferences.
+                </p>
+
+                <span class="dashboard-module-link">
+                    Coming Soon
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- =========================================
+             PUBLISHING CTA
+        ========================================== -->
+
+        <div class="school-dashboard-publishing">
+
+            <div class="dashboard-publishing-glow"></div>
+
+            <div class="dashboard-publishing-content">
+
+                <span class="dashboard-section-label">
+                    SCHOOL NEWSROOM
+                </span>
+
+                <h2>
+                    Have something important to share?
+                </h2>
+
+                <p>
+                    Publish your school's latest achievement,
+                    event or announcement and submit it for review.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'create_school_activity' %}"
+                class="dashboard-publishing-button"
+            >
+                Create Post
+                <span>→</span>
+            </a>
+
+        </div>
+
+
+        <!-- =========================================
+             LOGOUT
+        ========================================== -->
+
+        <div class="school-dashboard-footer">
+
+            <a
+                href="{% url 'school_logout' %}"
+                class="dashboard-logout"
+            >
+                <span>↪</span>
+                Log Out of School Portal
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

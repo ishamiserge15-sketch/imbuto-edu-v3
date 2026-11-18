@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ opportunity.title }} | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<main class="opportunity-detail-page">
+
+    <section class="opportunity-detail-hero">
+
+        <div class="opportunity-detail-container">
+
+            <a
+                href="{% url 'opportunities' %}"
+                class="back-link"
+            >
+                ← Back to Opportunities
+            </a>
+
+
+            {% if opportunity.category %}
+
+                <span class="opportunity-category">
+                    {{ opportunity.get_category_display }}
+                </span>
+
+            {% endif %}
+
+
+            <h1>
+                {{ opportunity.title }}
+            </h1>
+
+
+            <p class="opportunity-provider">
+                Published by {{ opportunity.organization }}
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="opportunity-detail-section">
+
+        <div class="opportunity-detail-grid">
+
+            <article class="opportunity-detail-content">
+
+                {% if opportunity.image %}
+
+                    <img
+                        src="{{ opportunity.image.url }}"
+                        alt="{{ opportunity.title }}"
+                        class="opportunity-detail-image"
+                    >
+
+                {% endif %}
+
+
+                <div class="detail-block">
+
+                    <h2>
+                        About This Opportunity
+                    </h2>
+
+                    <p>
+                        {{ opportunity.description }}
+                    </p>
+
+                </div>
+
+
+                {% if opportunity.eligibility %}
+
+                    <div class="detail-block">
+
+                        <h2>
+                            Eligibility
+                        </h2>
+
+                        <p>
+                            {{ opportunity.eligibility }}
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </article>
+
+
+            <aside class="opportunity-detail-sidebar">
+
+                {% if opportunity.deadline %}
+
+                    <div class="deadline-card">
+
+                        <span>
+                            APPLICATION DEADLINE
+                        </span>
+
+                        <strong>
+                            {{ opportunity.deadline|date:"d F Y" }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if opportunity.application_url %}
+
+                    <a
+                        href="{{ opportunity.application_url }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="official-application-button"
+                    >
+                        Apply on Official Website →
+                    </a>
+
+                    <p class="application-note">
+                        You will leave Imbuto Edu and continue to
+                        the opportunity provider's official website.
+                    </p>
+
+                {% endif %}
+
+            </aside>
+
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

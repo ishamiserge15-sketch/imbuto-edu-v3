@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Register Your School | Imbuto Edu{% endblock %}
+
+{% block content %}
+
+<section class="school-auth-page">
+
+    <div class="school-auth-glow school-auth-glow-one"></div>
+    <div class="school-auth-glow school-auth-glow-two"></div>
+
+    <div class="school-auth-container">
+
+        <div class="school-auth-header">
+
+            <span class="school-auth-eyebrow">
+                Imbuto Edu • School Network
+            </span>
+
+            <h1>
+                Bring Your School<br>
+                <span>Into the Network.</span>
+            </h1>
+
+            <p>
+                Register your school on Imbuto Edu and give students,
+                parents and the education community a better way to
+                discover what your school offers.
+            </p>
+
+        </div>
+
+
+        <div class="school-auth-layout">
+
+            <!-- FORM -->
+            <div class="school-auth-card">
+
+                <div class="school-auth-card-header">
+
+                    <div>
+                        <span class="school-auth-label">
+                            School Registration
+                        </span>
+
+                        <h2>
+                            Register your school
+                        </h2>
+                    </div>
+
+                    <div class="school-auth-icon">
+                        +
+                    </div>
+
+                </div>
+
+
+                {% if form.non_field_errors %}
+                    <div class="school-auth-errors">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="school-auth-fields">
+
+                        {% for field in form %}
+
+                            <div class="school-auth-field">
+
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.help_text %}
+                                    <small>
+                                        {{ field.help_text }}
+                                    </small>
+                                {% endif %}
+
+                                {% for error in field.errors %}
+                                    <span class="school-auth-error">
+                                        {{ error }}
+                                    </span>
+                                {% endfor %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="school-auth-notice">
+
+                        <span>✓</span>
+
+                        <p>
+                            Your registration will be reviewed before
+                            your school receives access to the school
+                            publishing system.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="school-auth-submit"
+                    >
+                        Submit School Registration
+                        <span>→</span>
+                    </button>
+
+                </form>
+
+
+                <div class="school-auth-switch">
+
+                    Already registered?
+
+                    <a href="{% url 'school_login' %}">
+                        School Login →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- INFORMATION PANEL -->
+            <aside class="school-auth-info">
+
+                <div class="school-auth-info-orb"></div>
+
+                <span class="school-auth-info-label">
+                    WHY JOIN IMBUTO EDU?
+                </span>
+
+                <h2>
+                    Give your school a stronger digital presence.
+                </h2>
+
+                <p>
+                    Imbuto Edu connects schools with students, parents
+                    and the wider education community.
+                </p>
+
+
+                <div class="school-auth-benefits">
+
+                    <div class="school-auth-benefit">
+                        <span>01</span>
+
+                        <div>
+                            <strong>
+                                School Discovery
+                            </strong>
+
+                            <p>
+                                Help students and parents discover your
+                                school.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="school-auth-benefit">
+                        <span>02</span>
+
+                        <div>
+                            <strong>
+                                Share Achievements
+                            </strong>
+
+                            <p>
+                                Highlight important school activities,
+                                competitions and achievements.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="school-auth-benefit">
+                        <span>03</span>
+
+                        <div>
+                            <strong>
+                                Publish Updates
+                            </strong>
+
+                            <p>
+                                Keep your community informed with
+                                approved school news.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,707 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Careers & TVET | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<main class="careers-page">
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="careers-hero">
+
+        <div class="careers-hero-content">
+
+            <span class="section-label">
+                BUILD YOUR FUTURE
+            </span>
+
+            <h1>
+                Careers & TVET
+            </h1>
+
+            <p>
+                Explore careers, discover practical skills and find
+                education pathways that can help you plan your future.
+            </p>
+
+            <form
+                method="get"
+                action="{% url 'careers' %}"
+                class="career-search"
+            >
+
+                <label for="career-search-input">
+                    Search careers and TVET programs
+                </label>
+
+                <div class="career-search-row">
+
+                    <input
+                        id="career-search-input"
+                        type="search"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search for a career, skill, program..."
+                        autocomplete="off"
+                    >
+
+                    <button type="submit">
+                        Search
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         INTRODUCTION
+    ========================================== -->
+
+    <section class="careers-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                YOUR FUTURE
+            </span>
+
+            <h2>
+                Find a Path That Fits You
+            </h2>
+
+            <p>
+                Your education can open many different directions.
+                Explore career areas and technical and vocational
+                education programs to understand your options.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         CAREERS
+    ========================================== -->
+
+    <section class="careers-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                CAREER DISCOVERY
+            </span>
+
+            <h2>
+                Explore Careers
+            </h2>
+
+            <p>
+                Discover career areas, recommended subjects and
+                important skills.
+            </p>
+
+        </div>
+
+
+        {% if careers %}
+
+            <div class="database-grid">
+
+                {% for career in careers %}
+
+                    <article class="database-card">
+
+                        {% if career.image %}
+
+                            <div class="database-image">
+
+                                <img
+                                    src="{{ career.image.url }}"
+                                    alt="{{ career.name }}"
+                                >
+
+                            </div>
+
+                        {% else %}
+
+                            <div
+                                class="database-image database-placeholder"
+                                aria-hidden="true"
+                            >
+                                🎓
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="database-body">
+
+                            {% if career.category %}
+
+                                <span class="category-badge">
+                                    {{ career.category }}
+                                </span>
+
+                            {% endif %}
+
+
+                            <h3>
+                                {{ career.name }}
+                            </h3>
+
+
+                            {% if career.description %}
+
+                                <p class="info-text">
+                                    {{ career.description }}
+                                </p>
+
+                            {% else %}
+
+                                <p class="info-text">
+                                    Explore this career and learn more
+                                    about its possible education pathway.
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if career.subjects %}
+
+                                <div class="info-block">
+
+                                    <h4 class="info-title">
+                                        Recommended Subjects
+                                    </h4>
+
+                                    <p class="info-text">
+                                        {{ career.subjects }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if career.skills %}
+
+                                <div class="info-block">
+
+                                    <h4 class="info-title">
+                                        Important Skills
+                                    </h4>
+
+                                    <p class="info-text">
+                                        {{ career.skills }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🎓
+                </div>
+
+                <h3>
+                    No careers found
+                </h3>
+
+                {% if search %}
+
+                    <p>
+                        We could not find a career matching
+                        "{{ search }}".
+                    </p>
+
+                    <a
+                        href="{% url 'careers' %}"
+                        class="cta-button"
+                    >
+                        View All Careers
+                    </a>
+
+                {% else %}
+
+                    <p>
+                        Career information will appear here as it is
+                        added to Imbuto Edu.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- =========================================
+         TVET
+    ========================================== -->
+
+    <section class="careers-section tvet-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                PRACTICAL EDUCATION
+            </span>
+
+            <h2>
+                Explore TVET Programs
+            </h2>
+
+            <p>
+                Discover technical and vocational programs that
+                develop practical knowledge and skills.
+            </p>
+
+        </div>
+
+
+        {% if tvet_programs %}
+
+            <div class="database-grid">
+
+                {% for program in tvet_programs %}
+
+                    <article class="database-card">
+
+                        {% if program.image %}
+
+                            <div class="database-image">
+
+                                <img
+                                    src="{{ program.image.url }}"
+                                    alt="{{ program.name }}"
+                                >
+
+                            </div>
+
+                        {% else %}
+
+                            <div
+                                class="database-image database-placeholder"
+                                aria-hidden="true"
+                            >
+                                🛠️
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="database-body">
+
+                            {% if program.category %}
+
+                                <span class="category-badge">
+                                    {{ program.category }}
+                                </span>
+
+                            {% endif %}
+
+
+                            <h3>
+                                {{ program.name }}
+                            </h3>
+
+
+                            {% if program.institution %}
+
+                                <p class="program-institution">
+                                    🏫 {{ program.institution }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if program.description %}
+
+                                <p class="info-text">
+                                    {{ program.description }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if program.duration %}
+
+                                <div class="info-block">
+
+                                    <h4 class="info-title">
+                                        Duration
+                                    </h4>
+
+                                    <p class="info-text">
+                                        {{ program.duration }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if program.entry_requirements %}
+
+                                <div class="info-block">
+
+                                    <h4 class="info-title">
+                                        Entry Requirements
+                                    </h4>
+
+                                    <p class="info-text">
+                                        {{ program.entry_requirements }}
+                                    </p>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if program.website %}
+
+                                <div class="program-action">
+
+                                    <a
+                                        href="{{ program.website }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="database-link"
+                                    >
+                                        Visit Program Website →
+                                    </a>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🛠️
+                </div>
+
+                <h3>
+                    No TVET programs found
+                </h3>
+
+                {% if search %}
+
+                    <p>
+                        We could not find a TVET program matching
+                        "{{ search }}".
+                    </p>
+
+                {% else %}
+
+                    <p>
+                        TVET programs will appear here as they are
+                        added to Imbuto Edu.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+<!-- =========================================
+     OPPORTUNITIES
+========================================== -->
+
+<section class="opportunities-preview">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            OPPORTUNITIES
+        </span>
+
+        <h2>
+            Don't Miss Your Next Opportunity
+        </h2>
+
+        <p>
+            Discover scholarships, leadership programs, STEM
+            opportunities, exchanges, competitions and other
+            opportunities for students.
+        </p>
+
+    </div>
+
+
+    <div class="opportunity-preview-grid">
+
+        <article class="opportunity-preview-card">
+
+            <div class="opportunity-preview-icon">
+                🎓
+            </div>
+
+            <h3>
+                Scholarships
+            </h3>
+
+            <p>
+                Discover scholarship opportunities that can help
+                students continue their education.
+            </p>
+
+        </article>
+
+
+        <article class="opportunity-preview-card">
+
+            <div class="opportunity-preview-icon">
+                🌍
+            </div>
+
+            <h3>
+                Exchange Programs
+            </h3>
+
+            <p>
+                Explore international education and exchange
+                opportunities.
+            </p>
+
+        </article>
+
+
+        <article class="opportunity-preview-card">
+
+            <div class="opportunity-preview-icon">
+                🚀
+            </div>
+
+            <h3>
+                Leadership & STEM
+            </h3>
+
+            <p>
+                Find programs designed to develop leadership,
+                technology and science skills.
+            </p>
+
+        </article>
+
+
+        <article class="opportunity-preview-card">
+
+            <div class="opportunity-preview-icon">
+                🇷🇼
+            </div>
+
+            <h3>
+                Government Opportunities
+            </h3>
+
+            <p>
+                Discover official education and youth opportunities
+                published by government institutions.
+            </p>
+
+        </article>
+
+    </div>
+
+
+    <div class="opportunity-preview-action">
+
+        <a
+            href="{% url 'opportunities' %}"
+            class="cta-button"
+        >
+            Explore All Opportunities →
+        </a>
+
+    </div>
+
+</section>
+
+    <!-- =========================================
+         EDUCATION PATHWAY
+    ========================================== -->
+
+    <section class="pathway-section">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                THINK AHEAD
+            </span>
+
+            <h2>
+                Your Education Can Lead Somewhere
+            </h2>
+
+            <p>
+                There is no single path to a successful future.
+                Explore different options and learn what interests you.
+            </p>
+
+        </div>
+
+
+        <div class="pathway-grid">
+
+            <article class="pathway-card">
+
+                <div class="pathway-icon">
+                    🔎
+                </div>
+
+                <h3>
+                    Discover
+                </h3>
+
+                <p>
+                    Explore careers and education areas that match
+                    your interests.
+                </p>
+
+            </article>
+
+
+            <article class="pathway-card">
+
+                <div class="pathway-icon">
+                    📚
+                </div>
+
+                <h3>
+                    Learn
+                </h3>
+
+                <p>
+                    Understand the subjects, skills and qualifications
+                    connected to different paths.
+                </p>
+
+            </article>
+
+
+            <article class="pathway-card">
+
+                <div class="pathway-icon">
+                    🛠️
+                </div>
+
+                <h3>
+                    Build Skills
+                </h3>
+
+                <p>
+                    Consider practical, technical and academic ways
+                    to develop useful skills.
+                </p>
+
+            </article>
+
+
+            <article class="pathway-card">
+
+                <div class="pathway-icon">
+                    🌱
+                </div>
+
+                <h3>
+                    Plant Your Future
+                </h3>
+
+                <p>
+                    Make informed decisions about the next stage
+                    of your education.
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         CALL TO ACTION
+    ========================================== -->
+
+    <section class="career-cta">
+
+        <div class="career-cta-content">
+
+            <span class="section-label">
+                KEEP EXPLORING
+            </span>
+
+            <h2>
+                Your Future Starts With a Choice
+            </h2>
+
+            <p>
+                Explore schools, compare your options and discover
+                opportunities through Imbuto Edu.
+            </p>
+
+            <div class="cta-actions">
+
+                <a
+                    href="{% url 'schools_page' %}"
+                    class="cta-button"
+                >
+                    Explore Schools
+                </a>
+
+                <a
+                    href="{% url 'compare_schools' %}"
+                    class="cta-button secondary"
+                >
+                    Compare Schools
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

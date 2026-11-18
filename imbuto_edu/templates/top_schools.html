@@ -1,0 +1,616 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Top Schools | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     TOP SCHOOLS HERO
+===================================================== -->
+
+<section class="top-schools-hero">
+
+    <div class="top-schools-hero-inner">
+
+        <span class="top-schools-eyebrow">
+            SCHOOL EXCELLENCE · RWANDA
+        </span>
+
+        <h1>
+            Top Schools
+            <span>in Rwanda</span>
+        </h1>
+
+        <p>
+            Discover schools standing out across academic performance,
+            sports and innovation.
+        </p>
+
+        <div class="ranking-note">
+            <span>✦</span>
+            Rankings are based on information available on Imbuto Edu.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RANKING CATEGORIES
+===================================================== -->
+
+<section class="ranking-tabs-section">
+
+    <div class="ranking-tabs">
+
+        <a
+            href="{% url 'top_schools' %}?ranking=overall"
+            class="{% if ranking == 'overall' %}active{% endif %}"
+        >
+            <span>✦</span>
+            Overall
+        </a>
+
+        <a
+            href="{% url 'top_schools' %}?ranking=academic"
+            class="{% if ranking == 'academic' %}active{% endif %}"
+        >
+            <span>🎓</span>
+            Academic
+        </a>
+
+        <a
+            href="{% url 'top_schools' %}?ranking=sports"
+            class="{% if ranking == 'sports' %}active{% endif %}"
+        >
+            <span>🏆</span>
+            Sports
+        </a>
+
+        <a
+            href="{% url 'top_schools' %}?ranking=innovation"
+            class="{% if ranking == 'innovation' %}active{% endif %}"
+        >
+            <span>💡</span>
+            Innovation
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RANKING INTRO
+===================================================== -->
+
+<section class="ranking-intro">
+
+    <div>
+
+        {% if ranking == 'academic' %}
+
+            <span class="section-label">
+                ACADEMIC EXCELLENCE
+            </span>
+
+            <h2>
+                Schools leading in academics
+            </h2>
+
+            <p>
+                Explore schools ranked by their academic performance
+                indicators on Imbuto Edu.
+            </p>
+
+        {% elif ranking == 'sports' %}
+
+            <span class="section-label">
+                SPORTS EXCELLENCE
+            </span>
+
+            <h2>
+                Schools where talent meets sport
+            </h2>
+
+            <p>
+                Discover schools with strong sports performance
+                and student athletic opportunities.
+            </p>
+
+        {% elif ranking == 'innovation' %}
+
+            <span class="section-label">
+                INNOVATION
+            </span>
+
+            <h2>
+                Schools building the future
+            </h2>
+
+            <p>
+                Explore schools standing out through innovation,
+                creativity and future-focused learning.
+            </p>
+
+        {% else %}
+
+            <span class="section-label">
+                OVERALL EXCELLENCE
+            </span>
+
+            <h2>
+                Rwanda's leading schools
+            </h2>
+
+            <p>
+                Explore schools using multiple indicators to understand
+                different dimensions of school excellence.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <div class="ranking-count">
+
+        <strong>
+            {{ schools|length }}
+        </strong>
+
+        <span>
+            Schools ranked
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TOP 3 PODIUM
+===================================================== -->
+
+{% if schools %}
+
+<section class="ranking-podium-section">
+
+    <div class="ranking-podium">
+
+        {% for school in schools|slice:":3" %}
+
+        <article
+            class="podium-card podium-{{ forloop.counter }}"
+        >
+
+            <div class="podium-rank">
+
+                {% if forloop.counter == 1 %}
+                    🥇
+                {% elif forloop.counter == 2 %}
+                    🥈
+                {% else %}
+                    🥉
+                {% endif %}
+
+            </div>
+
+
+            <div class="podium-image-wrap">
+
+                {% if school.image %}
+
+                    <img
+                        src="{{ school.image.url }}"
+                        alt="{{ school.name }}"
+                        class="podium-image"
+                    >
+
+                {% else %}
+
+                    <div class="podium-image-fallback">
+                        {{ school.name|first|upper }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="podium-body">
+
+                {% if school.ownership %}
+
+                    <span class="ranking-ownership">
+                        {{ school.ownership }}
+                    </span>
+
+                {% endif %}
+
+
+                <h3>
+                    {{ school.name }}
+                </h3>
+
+
+                <p class="podium-location">
+                    📍 {{ school.district }}, {{ school.province }}
+                </p>
+
+
+                <div class="podium-score">
+
+                    {% if ranking == 'academic' %}
+
+                        <strong>
+                            {{ school.academic_score }}
+                        </strong>
+
+                        <span>
+                            Academic
+                        </span>
+
+                    {% elif ranking == 'sports' %}
+
+                        <strong>
+                            {{ school.sports_score }}
+                        </strong>
+
+                        <span>
+                            Sports
+                        </span>
+
+                    {% elif ranking == 'innovation' %}
+
+                        <strong>
+                            {{ school.innovation_score }}
+                        </strong>
+
+                        <span>
+                            Innovation
+                        </span>
+
+                    {% else %}
+
+                        <strong>
+                            {{ school.academic_score }}
+                        </strong>
+
+                        <span>
+                            Overall
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <a
+                    href="{% url 'school_detail' school.id %}"
+                    class="podium-link"
+                >
+                    View Profile
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+<!-- =====================================================
+     FULL RANKING
+===================================================== -->
+
+<section class="full-ranking-section">
+
+    <div class="full-ranking-heading">
+
+        <div>
+
+            <span class="section-label">
+                SCHOOL LEADERBOARD
+            </span>
+
+            <h2>
+                Ranked Schools
+            </h2>
+
+        </div>
+
+        <p>
+            Explore the schools below and open their profiles
+            for more information.
+        </p>
+
+    </div>
+
+
+    <div class="ranking-list">
+
+        {% for school in schools %}
+
+        <article class="premium-ranking-card">
+
+
+            <!-- RANK -->
+
+            <div class="premium-rank">
+
+                {% if forloop.counter == 1 %}
+
+                    <span class="medal">🥇</span>
+
+                {% elif forloop.counter == 2 %}
+
+                    <span class="medal">🥈</span>
+
+                {% elif forloop.counter == 3 %}
+
+                    <span class="medal">🥉</span>
+
+                {% else %}
+
+                    <span class="number">
+                        {{ forloop.counter }}
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- IMAGE -->
+
+            <div class="premium-ranking-image-wrap">
+
+                {% if school.image %}
+
+                    <img
+                        src="{{ school.image.url }}"
+                        alt="{{ school.name }}"
+                        class="premium-ranking-image"
+                    >
+
+                {% else %}
+
+                    <div class="premium-ranking-fallback">
+                        {{ school.name|first|upper }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- INFORMATION -->
+
+            <div class="premium-ranking-content">
+
+                <div class="ranking-card-topline">
+
+                    {% if school.ownership %}
+
+                        <span class="ranking-ownership">
+                            {{ school.ownership }}
+                        </span>
+
+                    {% endif %}
+
+                    {% if school.school_type %}
+
+                        <span class="ranking-type">
+                            {{ school.school_type }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <h3>
+                    {{ school.name }}
+                </h3>
+
+
+                <p class="ranking-location">
+                    📍 {{ school.district }}, {{ school.province }}
+                </p>
+
+            <div class="score-line">
+
+    <div class="score-label">
+
+        {% if ranking == "academic" %}
+
+            <span>Academic Performance</span>
+            <strong>{{ school.academic_score }}/100</strong>
+
+        {% elif ranking == "sports" %}
+
+            <span>Sports Performance</span>
+            <strong>{{ school.sports_score }}/100</strong>
+
+        {% elif ranking == "innovation" %}
+
+            <span>Innovation Performance</span>
+            <strong>{{ school.innovation_score }}/100</strong>
+
+        {% else %}
+
+            <span>Overall Performance</span>
+            <strong>{{ school.academic_score }}/100</strong>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="score-track">
+
+        {% if ranking == "academic" %}
+
+            <div
+                class="score-fill"
+                data-width="{{ school.academic_score }}"
+            ></div>
+
+        {% elif ranking == "sports" %}
+
+            <div
+                class="score-fill"
+                data-width="{{ school.sports_score }}"
+            ></div>
+
+        {% elif ranking == "innovation" %}
+
+            <div
+                class="score-fill"
+                data-width="{{ school.innovation_score }}"
+            ></div>
+
+        {% else %}
+
+            <div
+                class="score-fill"
+                data-width="{{ school.academic_score }}"
+            ></div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+                
+
+                    
+
+                
+
+            
+
+
+            <!-- ACTION -->
+
+            <a
+                href="{% url 'school_detail' school.id %}"
+                class="ranking-view-button"
+            >
+                View Profile
+                <span>→</span>
+            </a>
+
+        </article>
+
+        {% empty %}
+
+        <div class="ranking-empty">
+
+            <div class="ranking-empty-icon">
+                ✦
+            </div>
+
+            <h3>
+                No schools available yet
+            </h3>
+
+            <p>
+                School ranking information will appear here
+                as schools are added to Imbuto Edu.
+            </p>
+
+            <a
+                href="{% url 'schools_page' %}"
+                class="ranking-empty-button"
+            >
+                Explore Schools
+                →
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FINAL CTA
+===================================================== -->
+
+<section class="ranking-cta">
+
+    <div>
+
+        <span class="section-label">
+            KEEP EXPLORING
+        </span>
+
+        <h2>
+            Find the school that fits your future.
+        </h2>
+
+        <p>
+            Rankings are one way to explore schools.
+            Open individual profiles and compare your options
+            before making a decision.
+        </p>
+
+    </div>
+
+
+    <div class="ranking-cta-actions">
+
+        <a
+            href="{% url 'schools_page' %}"
+            class="ranking-cta-primary"
+        >
+            Explore All Schools
+            →
+        </a>
+
+        <a
+            href="{% url 'compare_schools' %}"
+            class="ranking-cta-secondary"
+        >
+            Compare Schools
+        </a>
+
+    </div>
+
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const scoreBars = document.querySelectorAll(".score-fill");
+
+    scoreBars.forEach(function (bar) {
+
+        const width = parseFloat(bar.dataset.width || "0");
+
+        const safeWidth = Math.min(Math.max(width, 0), 100);
+
+        requestAnimationFrame(function () {
+            bar.style.width = safeWidth + "%";
+        });
+
+    });
+
+});
+</script>
+
+{% endblock %}

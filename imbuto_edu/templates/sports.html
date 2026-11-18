@@ -1,0 +1,550 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Sports Schools | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     SPORTS HERO
+========================================================= -->
+
+<section class="sports-header sports-page-hero">
+
+    <div class="sports-hero-content">
+
+        <p class="eyebrow">
+            TALENT & EXCELLENCE
+        </p>
+
+        <h1>
+            Sports in Rwanda's Schools
+        </h1>
+
+        <p>
+            Discover schools developing young athletes,
+            explore sporting disciplines, and find opportunities
+            to grow through school sports.
+        </p>
+
+        <div class="sports-hero-actions">
+
+            <a href="#sports-schools" class="sports-primary-btn">
+                Explore Sports
+                <span>↓</span>
+            </a>
+
+            <a href="{% url 'schools_page' %}" class="sports-secondary-btn">
+                Explore Schools
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="sports-hero-visual">
+
+        <div class="sports-orbit orbit-one"></div>
+        <div class="sports-orbit orbit-two"></div>
+
+        <div class="sports-ball">
+            ⚽
+        </div>
+
+        <div class="sports-floating-card sports-card-one">
+            <span>🏆</span>
+            <strong>Talent</strong>
+            <small>Development</small>
+        </div>
+
+        <div class="sports-floating-card sports-card-two">
+            <span>⚡</span>
+            <strong>Discipline</strong>
+            <small>Performance</small>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SPORTS STATS
+========================================================= -->
+
+<section class="sports-stats">
+
+    <div class="sports-stat-card">
+
+        <span class="sports-stat-icon">
+            🏅
+        </span>
+
+        <div>
+            <strong>{{ sports|length }}</strong>
+            <span>Sports Disciplines</span>
+        </div>
+
+    </div>
+
+
+    <div class="sports-stat-card">
+
+        <span class="sports-stat-icon">
+            🏫
+        </span>
+
+        <div>
+            <strong>{{ school_sports|length }}</strong>
+            <span>School Opportunities</span>
+        </div>
+
+    </div>
+
+
+    <div class="sports-stat-card">
+
+        <span class="sports-stat-icon">
+            📍
+        </span>
+
+        <div>
+            <strong>Rwanda</strong>
+            <span>National Discovery</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SPORT FILTER
+========================================================= -->
+
+<section class="sports-filter sports-filter-premium">
+
+    <div class="sports-filter-heading">
+
+        <p class="section-label">
+            FIND YOUR SPORT
+        </p>
+
+        <h2>
+            Explore by sporting discipline
+        </h2>
+
+        <p>
+            Select a sport to discover schools participating
+            in that discipline.
+        </p>
+
+    </div>
+
+
+    <form method="GET" class="sports-filter-form">
+
+        <div class="sports-select-wrapper">
+
+            <label for="sport">
+                Sporting discipline
+            </label>
+
+            <select
+                name="sport"
+                id="sport"
+            >
+
+                <option value="">
+                    All Sports
+                </option>
+
+                {% for sport in sports %}
+
+                    <option
+                        value="{{ sport.id }}"
+                        {% if selected_sport == sport.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ sport.name }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <button type="submit" class="sports-filter-button">
+
+            <span>
+                Find Schools
+            </span>
+
+            <span>
+                →
+            </span>
+
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- =========================================================
+     SPORTS DISCIPLINES
+========================================================= -->
+
+<section class="sports-disciplines">
+
+    <div class="section-heading sports-section-heading">
+
+        <div>
+
+            <span class="section-label">
+                SPORTING DISCIPLINES
+            </span>
+
+            <h2>
+                Discover the sports
+            </h2>
+
+        </div>
+
+        <p>
+            Explore the different sporting opportunities
+            represented across Rwanda's schools.
+        </p>
+
+    </div>
+
+
+    <div class="sports-discipline-grid">
+
+        {% for sport in sports %}
+
+            <a
+                href="{% url 'sports' %}?sport={{ sport.id }}"
+                class="sports-discipline-card
+                {% if selected_sport == sport.id|stringformat:'s' %}
+                    active
+                {% endif %}"
+            >
+
+                <div class="sports-discipline-icon">
+
+                    {% if sport.name|lower == "football" %}
+                        ⚽
+                    {% elif sport.name|lower == "basketball" %}
+                        🏀
+                    {% elif sport.name|lower == "volleyball" %}
+                        🏐
+                    {% elif sport.name|lower == "tennis" %}
+                        🎾
+                    {% elif sport.name|lower == "table tennis" %}
+                        🏓
+                    {% elif sport.name|lower == "badminton" %}
+                        🏸
+                    {% elif sport.name|lower == "swimming" %}
+                        🏊
+                    {% elif sport.name|lower == "athletics" %}
+                        🏃
+                    {% elif sport.name|lower == "rugby" %}
+                        🏉
+                    {% elif sport.name|lower == "cycling" %}
+                        🚴
+                    {% else %}
+                        🏅
+                    {% endif %}
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ sport.name }}
+                    </strong>
+
+                    <span>
+                        Explore schools →
+                    </span>
+
+                </div>
+
+            </a>
+
+        {% empty %}
+
+            <div class="sports-empty-disciplines">
+
+                <h3>
+                    Sports are coming soon
+                </h3>
+
+                <p>
+                    Sporting disciplines will appear here
+                    as they are added to Imbuto Edu.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SCHOOL SPORTS RESULTS
+========================================================= -->
+
+<section
+    class="sports-schools sports-results-section"
+    id="sports-schools"
+>
+
+    <div class="section-heading sports-section-heading">
+
+        <div>
+
+            <span class="section-label">
+                SPORTS OPPORTUNITIES
+            </span>
+
+            <h2>
+                Schools & Sports
+            </h2>
+
+        </div>
+
+        <p>
+            {% if selected_sport %}
+                Showing schools connected to the selected sport.
+            {% else %}
+                Discover schools and the sports they offer.
+            {% endif %}
+        </p>
+
+    </div>
+
+
+    {% if selected_sport %}
+
+        <div class="selected-sport-banner">
+
+            <div>
+
+                <span>
+                    SELECTED SPORT
+                </span>
+
+                {% for sport in sports %}
+
+                    {% if selected_sport == sport.id|stringformat:"s" %}
+
+                        <strong>
+                            {{ sport.name }}
+                        </strong>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+            <a href="{% url 'sports' %}">
+                View all sports →
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+    <div class="school-grid sports-school-grid">
+
+        {% for item in school_sports %}
+
+            <article class="school-card sports-school-card">
+
+                <!-- School image -->
+
+                <div class="sports-school-image-wrapper">
+
+                    {% if item.school.image %}
+
+                        <img
+                            src="{{ item.school.image.url }}"
+                            alt="{{ item.school.name }}"
+                            class="school-card-image"
+                        >
+
+                    {% else %}
+
+                        <div class="sports-school-image-fallback">
+
+                            <span>
+                                {{ item.school.name|first|upper }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <span class="sports-image-badge">
+                        {{ item.sport.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="school-card-content">
+
+                    <span class="school-badge">
+                        {{ item.sport.name }}
+                    </span>
+
+
+                    <h3>
+                        {{ item.school.name }}
+                    </h3>
+
+
+                    <p class="school-location">
+                        📍 {{ item.school.district }},
+                        {{ item.school.province }}
+                    </p>
+
+
+                    {% if item.description %}
+
+                        <p class="school-description">
+                            {{ item.description|truncatewords:25 }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if item.achievement %}
+
+                        <div class="sports-achievement">
+
+                            <span class="achievement-icon">
+                                🏆
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Achievement
+                                </small>
+
+                                <p>
+                                    {{ item.achievement|truncatewords:20 }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="sports-school-footer">
+
+                        <a
+                            href="{% url 'school_detail' item.school.id %}"
+                        >
+                            View School Profile
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="sports-empty-state">
+
+                <div class="sports-empty-icon">
+                    🏅
+                </div>
+
+                <h3>
+                    No schools found for this sport
+                </h3>
+
+                <p>
+                    We don't have participating school information
+                    for this selection yet.
+                </p>
+
+                <a href="{% url 'sports' %}">
+                    Explore All Sports →
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SPORTS CTA
+========================================================= -->
+
+<section class="sports-final-cta">
+
+    <div>
+
+        <p class="eyebrow">
+            FIND YOUR PATH
+        </p>
+
+        <h2>
+            Your talent can become your future.
+        </h2>
+
+        <p>
+            Explore schools, discover opportunities,
+            and find an environment where your talents
+            can grow.
+        </p>
+
+    </div>
+
+
+    <div class="sports-final-actions">
+
+        <a
+            href="{% url 'schools_page' %}"
+            class="sports-primary-btn"
+        >
+            Explore Schools →
+        </a>
+
+        <a
+            href="{% url 'top_schools' %}"
+            class="sports-secondary-btn"
+        >
+            Top Schools
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

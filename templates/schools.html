@@ -1,0 +1,1170 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Explore Schools | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+
+<section class="explore-hero">
+    <div class="explore-hero-content">
+
+        <p class="explore-eyebrow">
+            DISCOVER YOUR FUTURE
+        </p>
+
+        <h1>
+            Find the Right School
+            <span>for Your Future.</span>
+        </h1>
+
+        <p class="explore-intro">
+            Explore schools across Rwanda, discover their programs,
+            compare options, and make a more informed education choice.
+        </p>
+
+    </div>
+</section>
+
+
+<section class="explore-section">
+
+    <div class="explore-container">
+
+        <!-- FILTERS -->
+        <div class="filter-panel">
+
+            <div class="filter-heading">
+                <div>
+                    <span class="filter-eyebrow">
+                        SCHOOL DIRECTORY
+                    </span>
+
+                    <h2>
+                        Explore Schools
+                    </h2>
+                </div>
+
+                <span class="results-badge">
+                    {{ schools|length }} schools
+                </span>
+            </div>
+
+
+            <form
+                method="GET"
+                action="{% url 'schools_page' %}"
+                class="school-filters"
+            >
+
+                <!-- SEARCH -->
+                <div class="filter-field filter-search">
+
+                    <label for="school-search">
+                        Search
+                    </label>
+
+                    <input
+                        type="text"
+                        id="school-search"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search by school, district or province..."
+                    >
+
+                </div>
+
+
+                <!-- DISTRICT -->
+                <div class="filter-field">
+
+                    <label for="district-filter">
+                        District
+                    </label>
+
+                    <select
+                        id="district-filter"
+                        name="district"
+                    >
+
+                        <option value="">
+                            All districts
+                        </option>
+
+                        {% for item in districts %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if district == item %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- SCHOOL TYPE -->
+                <div class="filter-field">
+
+                    <label for="school-type-filter">
+                        School Type
+                    </label>
+
+                    <select
+                        id="school-type-filter"
+                        name="school_type"
+                    >
+
+                        <option value="">
+                            All types
+                        </option>
+
+                        {% for item in school_types %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if school_type == item %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- OWNERSHIP -->
+                <div class="filter-field">
+
+                    <label for="ownership-filter">
+                        Ownership
+                    </label>
+
+                    <select
+                        id="ownership-filter"
+                        name="ownership"
+                    >
+
+                        <option value="">
+                            All ownership
+                        </option>
+
+                        {% for item in ownerships %}
+
+                            <option
+                                value="{{ item }}"
+                                {% if ownership == item %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ item }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-actions">
+
+                    <button
+                        type="submit"
+                        class="filter-button"
+                    >
+                        Apply Filters
+                    </button>
+
+                    <a
+                        href="{% url 'schools_page' %}"
+                        class="clear-button"
+                    >
+                        Clear
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- RESULTS HEADER -->
+        <div class="results-header">
+
+            <div>
+                <p class="results-eyebrow">
+                    RESULTS
+                </p>
+
+                <h2>
+                    Schools in Rwanda
+                </h2>
+            </div>
+
+            <p class="results-description">
+                Select two schools to compare their information side by side.
+            </p>
+
+        </div>
+
+
+        <!-- COMPARE FORM -->
+        <form
+            method="GET"
+            action="{% url 'compare_schools' %}"
+            id="compare-form"
+        >
+
+            <div class="compare-banner">
+
+                <div class="compare-banner-text">
+
+                    <span class="compare-icon">
+                        ⇄
+                    </span>
+
+                    <div>
+                        <strong>
+                            Compare Schools
+                        </strong>
+
+                        <p>
+                            Select exactly two schools to compare.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="compare-counter">
+
+                    <span id="compare-count">
+                        0
+                    </span>
+
+                    <span>
+                        / 2 selected
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCHOOL GRID -->
+            {% if schools %}
+
+                <div class="school-grid">
+
+                    {% for school in schools %}
+
+                        <article class="school-card">
+
+                            <!-- IMAGE -->
+                            <div class="school-card-image">
+
+                                {% if school.image %}
+
+                                    <img
+                                        src="{{ school.image.url }}"
+                                        alt="{{ school.name }}"
+                                    >
+
+                                {% else %}
+
+                                    <div class="school-image-placeholder">
+                                        {{ school.name|first|upper }}
+                                    </div>
+
+                                {% endif %}
+
+
+                                <span class="school-type-badge">
+                                    {{ school.school_type }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- CONTENT -->
+                            <div class="school-card-content">
+
+                                <div class="school-card-top">
+
+                                    <span class="school-ownership">
+                                        {{ school.ownership }}
+                                    </span>
+
+                                </div>
+
+
+                                <h3>
+                                    {{ school.name }}
+                                </h3>
+
+
+                                <p class="school-location">
+                                    {{ school.district }}
+                                    {% if school.province %}
+                                        · {{ school.province }}
+                                    {% endif %}
+                                </p>
+
+
+                                {% if school.description %}
+
+                                    <p class="school-description">
+                                        {{ school.description|truncatewords:24 }}
+                                    </p>
+
+                                {% else %}
+
+                                    <p class="school-description school-description-muted">
+                                        School information will be expanded as more
+                                        details become available.
+                                    </p>
+
+                                {% endif %}
+
+
+                                <div class="school-card-footer">
+
+                                    <label class="compare-check">
+
+                                        <input
+                                            type="checkbox"
+                                            name="compare"
+                                            value="{{ school.id }}"
+                                            class="compare-school"
+                                        >
+
+                                        <span class="custom-checkbox"></span>
+
+                                        <span>
+                                            Compare
+                                        </span>
+
+                                    </label>
+
+
+                                    <a
+                                        href="{% url 'school_detail' school.id %}"
+                                        class="profile-link"
+                                    >
+                                        View Profile
+                                        <span>→</span>
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- COMPARE ACTION -->
+                <div class="compare-action">
+
+                    <div>
+
+                        <strong>
+                            Ready to compare?
+                        </strong>
+
+                        <p>
+                            Choose two schools above to see their information
+                            side by side.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="compare-submit"
+                        id="compare-submit"
+                        disabled
+                    >
+                        Compare Selected Schools
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+            {% else %}
+
+                <!-- EMPTY STATE -->
+                <div class="empty-schools">
+
+                    <div class="empty-icon">
+                        ?
+                    </div>
+
+                    <h2>
+                        No schools found
+                    </h2>
+
+                    <p>
+                        We couldn't find schools matching your current filters.
+                        Try changing your search or clearing the filters.
+                    </p>
+
+                    <a
+                        href="{% url 'schools_page' %}"
+                        class="filter-button"
+                    >
+                        View All Schools
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<style>
+
+.explore-hero {
+    position: relative;
+    padding: 110px 24px 95px;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(49, 190, 124, 0.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(38, 122, 255, 0.16),
+            transparent 35%
+        ),
+        #071c1b;
+    color: white;
+}
+
+.explore-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.025),
+            transparent
+        );
+    pointer-events: none;
+}
+
+.explore-hero-content {
+    position: relative;
+    max-width: 1180px;
+    margin: auto;
+}
+
+.explore-eyebrow,
+.filter-eyebrow,
+.results-eyebrow {
+    margin: 0 0 14px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.explore-eyebrow {
+    color: #8ee6ba;
+}
+
+.explore-hero h1 {
+    max-width: 850px;
+    margin: 0;
+    font-size: clamp(44px, 7vw, 82px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+}
+
+.explore-hero h1 span {
+    display: block;
+    color: #8ee6ba;
+}
+
+.explore-intro {
+    max-width: 690px;
+    margin: 28px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+
+.explore-section {
+    padding: 70px 24px 100px;
+    background: #f6f9f7;
+}
+
+.explore-container {
+    max-width: 1180px;
+    margin: auto;
+}
+
+
+.filter-panel {
+    padding: 30px;
+    border: 1px solid #dce8e2;
+    border-radius: 24px;
+    background: white;
+    box-shadow: 0 20px 55px rgba(15, 55, 42, 0.07);
+}
+
+.filter-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.filter-eyebrow {
+    color: #25865e;
+}
+
+.filter-heading h2 {
+    margin: 0;
+    font-size: 30px;
+    color: #102c27;
+}
+
+.results-badge {
+    padding: 10px 15px;
+    border-radius: 999px;
+    background: #e8f7ef;
+    color: #217a55;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+.school-filters {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 16px;
+    align-items: end;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-field label {
+    color: #30463f;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.filter-field input,
+.filter-field select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid #d7e3dd;
+    border-radius: 12px;
+    background: #fbfdfc;
+    color: #17332d;
+    font: inherit;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+    border-color: #4fb982;
+    box-shadow: 0 0 0 4px rgba(79, 185, 130, 0.12);
+}
+
+.filter-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.filter-button,
+.clear-button,
+.compare-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.filter-button {
+    border: 0;
+    background: #173d35;
+    color: white;
+}
+
+.filter-button:hover {
+    transform: translateY(-2px);
+}
+
+.clear-button {
+    border: 1px solid #d7e3dd;
+    background: white;
+    color: #365149;
+}
+
+
+.results-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+    margin: 65px 0 24px;
+}
+
+.results-eyebrow {
+    color: #25865e;
+}
+
+.results-header h2 {
+    margin: 0;
+    color: #102c27;
+    font-size: 36px;
+}
+
+.results-description {
+    max-width: 400px;
+    margin: 0;
+    color: #63766f;
+    line-height: 1.6;
+    text-align: right;
+}
+
+
+.compare-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 20px 22px;
+    border-radius: 18px;
+    background: #173d35;
+    color: white;
+}
+
+.compare-banner-text {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.compare-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(142, 230, 186, 0.15);
+    color: #8ee6ba;
+    font-size: 22px;
+}
+
+.compare-banner strong {
+    display: block;
+    font-size: 16px;
+}
+
+.compare-banner p {
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 13px;
+}
+
+.compare-counter {
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+}
+
+.compare-counter span:first-child {
+    color: #8ee6ba;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+
+.school-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.school-card {
+    overflow: hidden;
+    border: 1px solid #dce8e2;
+    border-radius: 22px;
+    background: white;
+    box-shadow: 0 14px 35px rgba(15, 55, 42, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.school-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 50px rgba(15, 55, 42, 0.11);
+}
+
+.school-card-image {
+    position: relative;
+    height: 205px;
+    overflow: hidden;
+    background: #dfece6;
+}
+
+.school-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.school-image-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(
+            135deg,
+            #173d35,
+            #2c8061
+        );
+    color: white;
+    font-size: 58px;
+    font-weight: 900;
+}
+
+.school-type-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #173d35;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+.school-card-content {
+    padding: 22px;
+}
+
+.school-card-top {
+    margin-bottom: 10px;
+}
+
+.school-ownership {
+    color: #25865e;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.school-card h3 {
+    margin: 0;
+    color: #102c27;
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+.school-location {
+    margin: 8px 0 0;
+    color: #71817b;
+    font-size: 13px;
+}
+
+.school-description {
+    min-height: 63px;
+    margin: 18px 0;
+    color: #53665f;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.school-description-muted {
+    color: #8a9892;
+}
+
+
+.school-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #edf2ef;
+}
+
+.compare-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #425850;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.compare-check input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.custom-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #b8cbc2;
+    border-radius: 5px;
+    background: white;
+    transition: 0.2s ease;
+}
+
+.compare-check input:checked + .custom-checkbox {
+    border-color: #25865e;
+    background: #25865e;
+    box-shadow: inset 0 0 0 4px white;
+}
+
+.compare-check input:disabled + .custom-checkbox {
+    opacity: 0.4;
+}
+
+.profile-link {
+    color: #217a55;
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.profile-link span {
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+}
+
+.profile-link:hover span {
+    display: inline-block;
+    transform: translateX(4px);
+}
+
+
+.compare-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-top: 28px;
+    padding: 24px;
+    border: 1px solid #dce8e2;
+    border-radius: 20px;
+    background: white;
+}
+
+.compare-action strong {
+    display: block;
+    color: #173d35;
+    font-size: 17px;
+}
+
+.compare-action p {
+    margin: 5px 0 0;
+    color: #74837d;
+    font-size: 13px;
+}
+
+.compare-submit {
+    border: 0;
+    background: #217a55;
+    color: white;
+}
+
+.compare-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #195f43;
+}
+
+.compare-submit:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+
+.empty-schools {
+    padding: 80px 30px;
+    border: 1px dashed #cbdad3;
+    border-radius: 24px;
+    background: white;
+    text-align: center;
+}
+
+.empty-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 18px;
+    border-radius: 18px;
+    background: #e8f7ef;
+    color: #217a55;
+    font-size: 26px;
+    font-weight: 900;
+}
+
+.empty-schools h2 {
+    margin: 0;
+    color: #173d35;
+}
+
+.empty-schools p {
+    max-width: 520px;
+    margin: 12px auto 25px;
+    color: #71817b;
+    line-height: 1.6;
+}
+
+
+@media (max-width: 1000px) {
+
+    .school-filters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filter-search {
+        grid-column: 1 / -1;
+    }
+
+    .school-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .explore-hero {
+        padding: 80px 20px 70px;
+    }
+
+    .explore-section {
+        padding: 50px 16px 75px;
+    }
+
+    .filter-panel {
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .filter-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .school-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-search {
+        grid-column: auto;
+    }
+
+    .results-header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-top: 45px;
+    }
+
+    .results-description {
+        text-align: left;
+    }
+
+    .compare-banner {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .school-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .compare-action {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .compare-submit {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .school-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-link {
+        align-self: flex-end;
+    }
+
+}
+
+</style>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("compare-form");
+    const checkboxes = document.querySelectorAll(".compare-school");
+    const count = document.getElementById("compare-count");
+    const button = document.getElementById("compare-submit");
+
+
+    function getSelectedSchools() {
+        return Array.from(checkboxes).filter(function (checkbox) {
+            return checkbox.checked;
+        });
+    }
+
+
+    function updateCompareState() {
+
+        const selected = getSelectedSchools();
+
+        if (count) {
+            count.textContent = selected.length;
+        }
+
+        if (button) {
+            button.disabled = selected.length !== 2;
+        }
+
+        checkboxes.forEach(function (checkbox) {
+
+            if (
+                !checkbox.checked &&
+                selected.length >= 2
+            ) {
+                checkbox.disabled = true;
+            } else {
+                checkbox.disabled = false;
+            }
+
+        });
+    }
+
+
+    checkboxes.forEach(function (checkbox) {
+
+        checkbox.addEventListener(
+            "change",
+            updateCompareState
+        );
+
+    });
+
+
+    if (form) {
+
+        form.addEventListener("submit", function (event) {
+
+            const selected = getSelectedSchools();
+
+            if (selected.length !== 2) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please select exactly two schools to compare."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Make absolutely sure the selected school IDs
+             * are submitted to Django.
+             */
+
+            form.querySelectorAll(
+                ".compare-hidden-input"
+            ).forEach(function (input) {
+                input.remove();
+            });
+
+
+            selected.forEach(function (checkbox) {
+
+                const hiddenInput =
+                    document.createElement("input");
+
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "compare";
+                hiddenInput.value = checkbox.value;
+                hiddenInput.className =
+                    "compare-hidden-input";
+
+                form.appendChild(hiddenInput);
+
+            });
+
+        });
+
+    }
+
+
+    updateCompareState();
+
+});
+</script>
+
+{% endblock %}

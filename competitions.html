@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Competitions | Imbuto Edu{% endblock %}
+{% block content %}
+
+<section class="competitions-page-hero">
+    <div class="competitions-hero-glow"></div>
+    <div class="competitions-hero-content">
+        <div class="competitions-hero-copy">
+            <span class="eyebrow">COMPETITION & EXCELLENCE</span>
+            <h1>Discover Rwanda's <span>School Competitions.</span></h1>
+            <p>Explore competitions, participating schools, achievements and opportunities that help students discover where excellence is happening.</p>
+            <div class="competitions-hero-actions">
+                <a href="#competition-results" class="competition-primary-btn">Explore Competitions <span>↓</span></a>
+                <a href="{% url 'schools_page' %}" class="competition-secondary-btn">Find a School</a>
+            </div>
+        </div>
+        <div class="competitions-hero-visual">
+            <div class="competition-orbit orbit-one"></div>
+            <div class="competition-orbit orbit-two"></div>
+            <div class="competition-trophy">🏆</div>
+            <div class="competition-floating-card floating-one"><strong>🏅</strong><span>Achievement</span></div>
+            <div class="competition-floating-card floating-two"><strong>🎯</strong><span>Excellence</span></div>
+            <div class="competition-floating-card floating-three"><strong>🚀</strong><span>Opportunity</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="competition-stat-strip">
+    <div class="competition-stat-card"><strong>{{ competitions|length }}</strong><span>Competitions</span></div>
+    <div class="competition-stat-card"><strong>{{ school_competitions|length }}</strong><span>School Entries</span></div>
+    <div class="competition-stat-card"><strong>Rwanda</strong><span>National Focus</span></div>
+    <div class="competition-stat-card"><strong>🏆</strong><span>Student Excellence</span></div>
+</section>
+
+<section class="competition-explorer">
+    <div class="competition-section-intro">
+        <span class="section-label">EXPLORE</span>
+        <h2>Find Competition Opportunities</h2>
+        <p>Select a competition to discover the schools participating and the achievements they have recorded.</p>
+    </div>
+    <div class="competition-filter-panel">
+        <form method="GET">
+            <div class="competition-filter-copy">
+                <span>COMPETITION DIRECTORY</span>
+                <strong>Choose a competition</strong>
+            </div>
+            <div class="competition-filter-control">
+                <select name="competition" id="competition">
+                    <option value="">All Competitions</option>
+                    {% for competition in competitions %}
+                        <option value="{{ competition.id }}" {% if selected_competition == competition.id|stringformat:"s" %}selected{% endif %}>
+                            {{ competition.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Find Schools <span>→</span></button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section class="competition-results" id="competition-results">
+
+    <div class="competition-results-heading">
+
+        <div>
+            <span class="section-label">COMPETITION DIRECTORY</span>
+            <h2>Competitions & Schools</h2>
+        </div>
+
+        <div class="competition-result-count">
+            <strong>{{ competitions|length }}</strong>
+            <span>competition{{ competitions|length|pluralize }}</span>
+        </div>
+
+    </div>
+
+
+    {% if selected_competition %}
+
+        <div class="selected-competition-banner">
+
+            <div class="selected-competition-icon">
+                🏆
+            </div>
+
+            <div>
+
+                <span>SELECTED COMPETITION</span>
+
+                {% for competition in competitions %}
+
+                    {% if selected_competition == competition.id|stringformat:"s" %}
+
+                        <h3>
+                            {{ competition.name }}
+                        </h3>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    <div class="competition-school-grid">
+
+        {% for competition in competitions %}
+
+            <article class="competition-school-card">
+
+                <div class="competition-card-image">
+
+                    {% if competition.image %}
+
+                        <img
+                            src="{{ competition.image.url }}"
+                            alt="{{ competition.name }}"
+                        >
+
+                    {% else %}
+
+                        <div class="competition-image-fallback">
+                            <span>🏆</span>
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="competition-card-badge">
+                        🏆 {{ competition.category }}
+                    </div>
+
+                </div>
+
+
+                <div class="competition-card-content">
+
+                    <div class="competition-school-meta">
+
+                        <span>COMPETITION</span>
+
+                        {% if competition.featured %}
+                            <strong>FEATURED</strong>
+                        {% endif %}
+
+                    </div>
+
+
+                    <h3>
+                        {{ competition.name }}
+                    </h3>
+
+
+                    {% if competition.organizer %}
+
+                        <p class="competition-school-location">
+                            🏛️ {{ competition.organizer }}
+                        </p>
+
+                    {% elif competition.organizing_institution %}
+
+                        <p class="competition-school-location">
+                            🏛️ {{ competition.organizing_institution }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if competition.description %}
+
+                        <p class="competition-card-description">
+                            {{ competition.description|truncatewords:30 }}
+                        </p>
+
+                    {% endif %}
+
+
+                    <div class="competition-performance-grid">
+
+                        {% if competition.target_level %}
+
+                            <div class="competition-performance-item">
+
+                                <span>TARGET LEVEL</span>
+
+                                <strong>
+                                    {{ competition.target_level }}
+                                </strong>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="competition-performance-item achievement-item">
+
+                            <span>SCHOOL ENTRIES</span>
+
+                            <strong>
+
+                                {{ competition.school_entry_count }}
+                                     
+                                
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    {% if competition.registration_deadline %}
+
+                        <div class="competition-achievement">
+
+                            <span class="achievement-icon">
+                                📅
+                            </span>
+
+                            <div>
+
+                                <span>
+                                    REGISTRATION DEADLINE
+                                </span>
+
+                                <p>
+                                    {{ competition.registration_deadline }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div class="competition-card-actions">
+
+                        <a
+                            href="{% url 'competition_detail' competition.id %}"
+                            class="competition-card-button"
+                        >
+                            View Competition
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        {% empty %}
+
+            <div class="competition-empty-state">
+
+                <div class="competition-empty-icon">
+                    🏆
+                </div>
+
+                <h3>
+                    No competitions available yet
+                </h3>
+
+                <p>
+                    Competition opportunities will appear here as they are added to Imbuto Edu.
+                </p>
+
+                <a
+                    href="{% url 'schools_page' %}"
+                    class="competition-empty-button"
+                >
+                    Explore Schools
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<section class="competition-future-section">
+    <div class="competition-future-content">
+        <span class="section-label">BUILT FOR THE FUTURE</span>
+        <h2>From school achievements to national excellence.</h2>
+        <p>Imbuto Edu is designed to grow into a trusted platform where official competition results, participating schools, student opportunities and national achievements can be published and discovered.</p>
+        <div class="competition-future-points">
+            <div><span>✓</span><p>Competition participation</p></div>
+            <div><span>✓</span><p>School achievements</p></div>
+            <div><span>✓</span><p>National competition records</p></div>
+            <div><span>✓</span><p>Future official results</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="competition-final-cta">
+    <div>
+        <span class="section-label">KEEP EXPLORING</span>
+        <h2>Every achievement starts with an opportunity.</h2>
+        <p>Explore schools, discover strengths and find opportunities across Rwanda.</p>
+        <a href="{% url 'schools_page' %}" class="competition-primary-btn">Explore Schools <span>→</span></a>
+    </div>
+</section>
+
+{% endblock %}

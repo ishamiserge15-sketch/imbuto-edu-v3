@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ school.name }} | Imbuto Edu
+{% endblock %}
+
+{% block content %}
+<main class="school-profile-page">
+
+    <section class="school-profile-hero">
+        <div class="school-profile-hero-inner">
+            <a href="{% url 'schools_page' %}" class="school-back-link">
+                ← Back to Explore Schools
+            </a>
+
+            <div class="school-profile-hero-grid">
+                <div class="school-profile-image-wrap">
+                    {% if school.image %}
+                        <img src="{{ school.image.url }}" alt="{{ school.name }}" class="school-profile-image">
+                    {% else %}
+                        <div class="school-profile-image-fallback">{{ school.name|first }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="school-profile-intro">
+                    <div class="school-profile-badges">
+                        {% if school.ownership %}
+                            <span class="school-badge">{{ school.ownership }}</span>
+                        {% endif %}
+                        {% if school.school_type %}
+                            <span class="school-badge school-badge-secondary">{{ school.school_type }}</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="school-profile-eyebrow">SCHOOL PROFILE</p>
+                    <h1>{{ school.name }}</h1>
+                    <p class="school-profile-location">
+                        {{ school.district }}{% if school.province %} · {{ school.province }}{% endif %} · Rwanda
+                    </p>
+
+                    {% if school.description %}
+                        <p class="school-profile-description">{{ school.description }}</p>
+                    {% else %}
+                        <p class="school-profile-description">
+                            Explore information about {{ school.name }}, including its programmes,
+                            activities, achievements, sports and school opportunities.
+                        </p>
+                    {% endif %}
+
+                    <div class="school-profile-actions">
+                        <a href="{% url 'schools_page' %}" class="cta-button">
+                            Explore More Schools <span>→</span>
+                        </a>
+                        <a href="{% url 'schools_page' %}" class="secondary-button">
+                            Compare School
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="school-profile-quick-info">
+        <div class="school-profile-container">
+            <div class="quick-info-grid">
+                <article class="quick-info-card">
+                    <span class="quick-info-label">Location</span>
+                    <strong>{{ school.district }}</strong>
+                    {% if school.province %}<span>{{ school.province }}</span>{% endif %}
+                </article>
+                <article class="quick-info-card">
+                    <span class="quick-info-label">School Type</span>
+                    <strong>{{ school.school_type|default:"Not provided" }}</strong>
+                </article>
+                <article class="quick-info-card">
+                    <span class="quick-info-label">Ownership</span>
+                    <strong>{{ school.ownership|default:"Not provided" }}</strong>
+                </article>
+                <article class="quick-info-card">
+                    <span class="quick-info-label">Category</span>
+                    <strong>{{ school.category|default:"Education" }}</strong>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="school-profile-indicators">
+        <div class="school-profile-container">
+            <div class="section-heading">
+                <div>
+                    <p class="section-eyebrow">SCHOOL SNAPSHOT</p>
+                    <h2>School Performance</h2>
+                    <p>A simple Imbuto Edu snapshot across academic, sports and innovation areas.</p>
+                </div>
+            </div>
+
+            <div class="indicator-grid">
+                <article class="indicator-card">
+                    <div class="indicator-card-top">
+                        <div><span class="indicator-label">Academic</span><strong>{{ academic_indicator }}%</strong></div>
+                    </div>
+                    <div class="indicator-progress"><div class="indicator-progress-fill" data-width="{{ academic_indicator }}"></div></div>
+                </article>
+
+                <article class="indicator-card">
+                    <div class="indicator-card-top">
+                        <div><span class="indicator-label">Sports</span><strong>{{ sports_indicator }}%</strong></div>
+                    </div>
+                    <div class="indicator-progress"><div class="indicator-progress-fill" data-width="{{ sports_indicator }}"></div></div>
+                </article>
+
+                <article class="indicator-card">
+                    <div class="indicator-card-top">
+                        <div><span class="indicator-label">Innovation</span><strong>{{ innovation_indicator }}%</strong></div>
+                    </div>
+                    <div class="indicator-progress"><div class="indicator-progress-fill" data-width="{{ innovation_indicator }}"></div></div>
+                </article>
+
+                <article class="indicator-card indicator-card-total">
+                    <div class="indicator-card-top">
+                        <div><span class="indicator-label">Overall Snapshot</span><strong>{{ indicator_average }}%</strong></div>
+                    </div>
+                    <div class="indicator-progress"><div class="indicator-progress-fill" data-width="{{ indicator_average }}"></div></div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="school-profile-main">
+        <div class="school-profile-container">
+            <div class="school-profile-layout">
+                <div class="school-profile-content">
+
+                    <section class="profile-section">
+                        <div class="section-heading">
+                            <div><p class="section-eyebrow">ABOUT</p><h2>About {{ school.name }}</h2></div>
+                        </div>
+                        <div class="profile-text-card">
+                            {% if school.description %}
+                                <p>{{ school.description }}</p>
+                            {% else %}
+                                <p>Information about this school will be expanded as more verified school information becomes available.</p>
+                            {% endif %}
+                        </div>
+                    </section>
+
+                    <section class="profile-section">
+                        <div class="section-heading">
+                            <div><p class="section-eyebrow">SCHOOL INFORMATION</p><h2>Key Information</h2></div>
+                        </div>
+                        <div class="information-grid">
+                            <div class="information-item"><span>School Name</span><strong>{{ school.name }}</strong></div>
+                            <div class="information-item"><span>District</span><strong>{{ school.district }}</strong></div>
+                            <div class="information-item"><span>Province</span><strong>{{ school.province|default:"Not provided" }}</strong></div>
+                            <div class="information-item"><span>Category</span><strong>{{ school.category|default:"Not provided" }}</strong></div>
+                            <div class="information-item"><span>School Type</span><strong>{{ school.school_type|default:"Not provided" }}</strong></div>
+                            <div class="information-item"><span>Ownership</span><strong>{{ school.ownership|default:"Not provided" }}</strong></div>
+                            <div class="information-item"><span>School Fees</span><strong>{{ school.school_fees|default:"Contact school" }}</strong></div>
+                            <div class="information-item"><span>Country</span><strong>Rwanda</strong></div>
+                        </div>
+                    </section>
+
+                    <section class="profile-section">
+                        <div class="section-heading"><div><p class="section-eyebrow">CAMPUS</p><h2>Facilities</h2></div></div>
+                        {% if school.facilities %}
+                            <div class="profile-text-card"><p>{{ school.facilities|linebreaksbr }}</p></div>
+                        {% else %}
+                            <div class="profile-empty"><span>🏫</span><h3>Facility information coming soon</h3><p>More campus and facility information will appear here when available.</p></div>
+                        {% endif %}
+                    </section>
+
+                    <section class="profile-section">
+                        <div class="section-heading"><div><p class="section-eyebrow">ACADEMICS</p><h2>Subjects &amp; Programmes</h2></div></div>
+                        {% if school.subjects %}
+                            <div class="profile-text-card"><p>{{ school.subjects|linebreaksbr }}</p></div>
+                        {% else %}
+                            <div class="profile-empty"><span>📚</span><h3>Academic programme information coming soon</h3><p>Subject and programme information will appear here when published.</p></div>
+                        {% endif %}
+                    </section>
+
+                    <section class="profile-section">
+                        <div class="section-heading"><div><p class="section-eyebrow">PERFORMANCE</p><h2>Academic Performance</h2></div></div>
+                        {% if school.academic_performance %}
+                            <div class="profile-text-card"><p>{{ school.academic_performance|linebreaksbr }}</p></div>
+                        {% else %}
+                            <div class="profile-empty"><span>📈</span><h3>Performance information coming soon</h3><p>Verified academic performance information will appear here when available.</p></div>
+                        {% endif %}
+                    </section>
+
+                    <section class="profile-section">
+                        <div class="section-heading"><div><p class="section-eyebrow">SPORTS &amp; ACTIVITIES</p><h2>School Sports</h2></div></div>
+                        {% if school_sports %}
+                            <div class="profile-item-grid">
+                                {% for item in school_sports %}
+                                    <article class="profile-item-card">
+                                        <span class="item-icon">🏆</span>
+                                        <h3>{{ item.sport.name }}</h3>
+                                        {% if item.achievement %}<strong>{{ item.achievement }}</strong>{% endif %}
+                                        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="profile-empty"><span>🏃</span><h3>Sports information coming soon</h3><p>This school has not published its sports information yet.</p></div>
+                        {% endif %}
+                    </section>
+
+                    <section class="profile-section">
+                        <div class="section-heading"><div><p class="section-eyebrow">COMPETITIONS &amp; ACHIEVEMENTS</p><h2>School Achievements</h2></div></div>
+                        {% if school_competitions %}
+                            <div class="profile-item-grid">
+                                {% for item in school_competitions %}
+                                    <article class="profile-item-card">
+                                        <span class="item-icon">🥇</span>
+                                        <h3>{{ item.competition.name }}</h3>
+                                        {% if item.year %}<span class="item-year">{{ item.year }}</span>{% endif %}
+                                        {% if item.position %}<strong>{{ item.position }}</strong>{% endif %}
+                                        {% if item.achievement %}<p>{{ item.achievement }}</p>{% endif %}
+                                        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="profile-empty"><span>🏆</span><h3>Competition information coming soon</h3><p>Achievements will appear here when published by the school.</p></div>
+                        {% endif %}
+                    </section>
+
+                    <section class="profile-section">
+                        <div class="section-heading">
+                            <div><p class="section-eyebrow">EVENTS &amp; NEWS</p><h2>Latest from the School</h2></div>
+                            <a href="{% url 'events_news' %}" class="section-link">View All →</a>
+                        </div>
+                        {% if school_events %}
+                            <div class="profile-event-grid">
+                                {% for event in school_events %}
+                                    <article class="profile-event-card">
+                                        {% if event.image %}<img src="{{ event.image.url }}" alt="{{ event.title }}">{% endif %}
+                                        <div class="profile-event-content">
+                                            <span class="event-date">{{ event.activity_date }}</span>
+                                            <h3>{{ event.title }}</h3>
+                                            <p>{{ event.description|truncatewords:25 }}</p>
+                                            <a href="{% url 'event_detail' event.id %}">Read More →</a>
+                                        </div>
+                                    </article>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="profile-empty"><span>📰</span><h3>No published events yet</h3><p>School activities and announcements will appear here.</p></div>
+                        {% endif %}
+                    </section>
+                </div>
+
+                <aside class="school-profile-sidebar">
+                    <div class="profile-sidebar-card">
+                        <p class="section-eyebrow">CONTACT</p>
+                        <h3>Contact the School</h3>
+
+                        {% if school.email %}
+                            <a href="mailto:{{ school.email }}" class="contact-item"><span>✉</span><div><small>Email</small><strong>{{ school.email }}</strong></div></a>
+                        {% endif %}
+
+                        {% if school.phone %}
+                            <a href="tel:{{ school.phone }}" class="contact-item"><span>☎</span><div><small>Phone</small><strong>{{ school.phone }}</strong></div></a>
+                        {% endif %}
+
+                        {% if school.website %}
+                            <a href="{{ school.website }}" target="_blank" rel="noopener noreferrer" class="contact-item"><span>↗</span><div><small>Website</small><strong>Visit official website</strong></div></a>
+                        {% endif %}
+
+                        {% if not school.email and not school.phone and not school.website %}
+                            <p class="sidebar-muted">School contact information has not been published yet.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="profile-sidebar-card profile-sidebar-highlight">
+                        <span class="sidebar-icon">⚖</span>
+                        <h3>Compare this school</h3>
+                        <p>Compare schools side by side to make a more informed education decision.</p>
+                        <a href="{% url 'schools_page' %}" class="sidebar-button">Choose Schools to Compare →</a>
+                    </div>
+
+                    <div class="profile-sidebar-card">
+                        <span class="sidebar-icon">🌱</span>
+                        <p class="section-eyebrow">IMBUTO EDU</p>
+                        <h3>Plant Your Future</h3>
+                        <p>Discover schools, opportunities, sports, competitions and pathways across Rwanda.</p>
+                        <a href="{% url 'schools_page' %}" class="section-link">Explore Schools →</a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    {% if related_schools %}
+        <section class="profile-related">
+            <div class="school-profile-container">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-eyebrow">MORE OPTIONS</p>
+                        <h2>Other Schools Nearby</h2>
+                        <p>Explore other schools in {{ school.district }}.</p>
+                    </div>
+                </div>
+
+                <div class="related-school-grid">
+                    {% for related in related_schools %}
+                        <article class="related-school-card">
+                            {% if related.image %}
+                                <img src="{{ related.image.url }}" alt="{{ related.name }}">
+                            {% else %}
+                                <div class="related-school-placeholder">{{ related.name|first }}</div>
+                            {% endif %}
+                            <div class="related-school-content">
+                                <span>{{ related.ownership }}</span>
+                                <h3>{{ related.name }}</h3>
+                                <p>{{ related.district }} · {{ related.province }}</p>
+                                <a href="{% url 'school_detail' related.id %}">View Profile →</a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    <section class="school-profile-cta">
+        <div class="school-profile-container">
+            <div class="profile-cta-card">
+                <p class="section-eyebrow">FIND YOUR PATH</p>
+                <h2>Looking for more schools?</h2>
+                <p>Explore schools across Rwanda and compare your options in one place.</p>
+                <a href="{% url 'schools_page' %}" class="cta-button">Explore Schools <span>→</span></a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const bars = document.querySelectorAll(".indicator-progress-fill");
+
+    bars.forEach(function (bar) {
+        const value = Number(bar.dataset.width || 0);
+        const safeValue = Math.min(Math.max(value, 0), 100);
+        bar.style.width = safeValue + "%";
+    });
+});
+</script>
+
+{% endblock %}
